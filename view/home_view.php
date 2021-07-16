@@ -3,11 +3,11 @@
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8" />
-        <title>Test</title>
+        <title>Projet 4</title>
     </head>
 
     <body>
-        <h1>Page d'accueil'</h1>
+        <h1>Page d'accueil</h1>
 
         <div id="login_signin">
             <h2>Se connecter</h2>
