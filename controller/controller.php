@@ -2,6 +2,7 @@
 require_once 'model/model_db.php';
 require_once 'model/model_user.php';
 require_once 'model/model_post.php';
+require_once 'model/model_comment.php';
 require 'view/home_view.php';
 
 // method login et signin avec les vérifications
