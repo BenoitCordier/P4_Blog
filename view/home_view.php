@@ -8,9 +8,9 @@
 </head>
 
 <body>
-    <h1>Page de connexion</h1>
+    <h1>Page d'accueil'</h1>
 
-    <div>
+    <div id="login_signin">
         <h2>Se connecter</h2>
         <form method="POST" action="index.php?action=logIn">
             <label for="user_login">Login :</label>
@@ -19,11 +19,7 @@
             <input id="user_password" type="text" name="password" />
             <input type="submit" value="Connexion" />
         </form>
-    </div>
 
-    
-
-    <div>
         <h2>S'enregistrer</h2>
         <form method="POST" action="index.php?action=signIn">
             <label for="user_name">Login :</label>
@@ -40,6 +36,30 @@
             <input id="confirmation_password" type="text" name="confirmation_password" />
             <input type="submit" value="S'enregistrer">
         </form>
+    </div>
+
+    <div>
+        <h2>Derniers articles :</h2>
+        <?php
+        while ($data = $posts->fetch())
+        {
+        ?>
+            <div class="news">
+                <h3>
+                    <?= htmlspecialchars($data['post_title']) ?>
+                    <em>le <?= $data['post_date_fr'] ?></em>
+                </h3>
+                
+                <p>
+                    <?= nl2br(htmlspecialchars($data['post_content'])) ?>
+                    <br />
+                    <em><a href="#">Commentaires</a></em>
+                </p>
+            </div>
+        <?php
+        }
+        $posts->closeCursor();
+        ?>
     </div>
 </body>
 

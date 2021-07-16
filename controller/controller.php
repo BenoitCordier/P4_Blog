@@ -1,7 +1,8 @@
 <?php
-require 'model/model_user.php';
-require 'model/model_db.php';
-require 'view/view.php';
+require_once 'model/model_db.php';
+require_once 'model/model_user.php';
+require_once 'model/model_post.php';
+require 'view/home_view.php';
 
 // method login et signin avec les vérifications
 
@@ -79,4 +80,25 @@ function signIn() {
         $req = $user_manager->signIn($user_name, $pass_hash, $e_mail, $first_name, $last_name);
         echo "Bienvenue " . $first_name . " " . $last_name . " ! Vous vous êtes enregistré sous le pseudonyme " . $user_name . " !";
     }
+}
+
+// method article et commentaire
+
+function listPosts()
+{
+    $postManager = new PostManager();
+    $posts = $postManager->getPosts();
+
+    require('view/home_view.php');
+}
+
+function post()
+{
+    $postManager = new PostManager();
+    $commentManager = new CommentManager();
+
+    $post = $postManager->getPost($_GET['id']);
+    $comments = $commentManager->getComments($_GET['id']);
+
+    require('view/post_view.php');
 }
