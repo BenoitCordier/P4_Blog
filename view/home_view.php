@@ -40,19 +40,19 @@
         <div>
             <h2>Derniers articles :</h2>
             <?php
-            while ($data = $posts->fetch())
+            while ($posts_array = $posts->fetch())
             {
             ?>
                 <div class="news">
                     <h3>
-                        <?= htmlspecialchars($data['post_title']) ?>
-                        <em>le <?= $data['post_date_fr'] ?></em>
+                        <?= htmlspecialchars($posts_array['post_title']) ?>
+                        <em>le <?= $posts_array['post_date_fr'] ?></em>
                     </h3>
                     
                     <p>
-                        <?= nl2br(htmlspecialchars($data['post_content'])) ?>
+                        <?= nl2br(htmlspecialchars($posts_array['post_content'])) ?>
                         <br />
-                        <em><a href="#">Commentaires</a></em>
+                        <em><a href="view/post_view.php?post=<?= $posts_array['id'] ?>">Commentaires</a></em>
                     </p>
                 </div>
             <?php

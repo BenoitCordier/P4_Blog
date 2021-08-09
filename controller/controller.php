@@ -3,12 +3,14 @@ require_once 'model/model_db.php';
 require_once 'model/model_user.php';
 require_once 'model/model_post.php';
 require_once 'model/model_comment.php';
-require 'view/home_view.php';
 
 // method login et signin avec les vérifications
 
+$db = dbConnection();
+
 function logIn() {
     $db = dbConnection();
+
     $user_manager = new UserManager($db);
     $user_name = !empty($_POST['user_name']) ? $_POST['user_name'] : NULL;
     $password = !empty($_POST['password']) ? $_POST['password'] : NULL;
@@ -37,6 +39,7 @@ function logIn() {
 
 function signIn() {
     $db = dbConnection();
+
     $user_manager = new UserManager($db);    
     $user_name = !empty($_POST['user_name']) ? $_POST['user_name'] : NULL;
     $password = !empty($_POST['password']) ? $_POST['password'] : NULL;
@@ -85,21 +88,32 @@ function signIn() {
 
 // method article et commentaire
 
-function listPosts()
-{
-    $postManager = new PostManager();
-    $posts = $postManager->getPosts();
+    function listPosts()
+    {
+        $db = dbConnection();
 
-    require('view/home_view.php');
-}
+        $postManager = new PostManager($db);
+        $posts = $postManager->getPosts();
 
-function post()
-{
-    $postManager = new PostManager();
-    $commentManager = new CommentManager();
+        require('view/home_view.php');
+    }
 
-    $post = $postManager->getPost($_GET['id']);
-    $comments = $commentManager->getComments($_GET['id']);
+    function listPost($post_id)
+    {
+        $db = dbConnection();
 
-    require('view/post_view.php');
-}
+        $postManager = new PostManager($db);
+        $post = $postManager->getPost($_GET['id']);
+        require('model/model_post.php');
+        require('view/post_view.php');
+    }
+
+    function listComments($post_id)
+    {
+        $db = dbConnection();
+
+        $commentManager = new CommentManager($db);
+        $comments = $commentManager->getComments($_GET['id']);
+        require('model/model_comment.php');
+        require('view/post_view.php');
+    }
