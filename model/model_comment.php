@@ -106,7 +106,7 @@ class CommentManager {
 
     public function getComments($post_id)
     {
-        $sql = 'SELECT id, user_id, comment_content, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin\') AS comment_date_fr FROM comment WHERE post_id = ? ORDER BY comment_date DESC';
+        $sql = 'SELECT id, post_id, user_id, comment_content, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin\') AS comment_date_fr FROM comment WHERE post_id = ? ORDER BY comment_date DESC';
         $stmt = $this->_db->prepare($sql);
         $stmt->execute(array($postId));
         $comments = $stmt;

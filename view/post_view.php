@@ -10,8 +10,10 @@
         <p><a href='/P4_Blog/index.php'>Retour à la liste des billets</a></p>
 
         <div class="news">
+            <h1>
+                Chapitre <?= htmlspecialchars($post['id']) ?> : <?= htmlspecialchars($post['post_title']) ?>
+            </h1>
             <h3>
-                <?= htmlspecialchars($post['post_title']) ?>
                 <em>le <?= $post['post_date_fr'] ?></em>
             </h3>
             
@@ -32,5 +34,20 @@
         }
         $comments->closeCursor();
         ?>
+
+        <form action="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
+            <div>
+                <label for="user_id">Auteur</label><br />
+                <input type="text" id="user_id" name="user_id" />
+            </div>
+            <div>
+                <label for="comment_content">Commentaire</label><br />
+                <textarea id="comment_content" name="comment_content"></textarea>
+            </div>
+            <div>
+                <input type="submit" />
+            </div>
+        </form>
+
     </body>
 </html>

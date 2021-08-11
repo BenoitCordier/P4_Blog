@@ -38,14 +38,14 @@
         </div>
 
         <div>
-            <h2>Derniers articles :</h2>
+            <h2>Derniers chapitres :</h2>
             <?php
             while ($posts_array = $posts->fetch())
             {
             ?>
                 <div class="news">
                     <h3>
-                        <?= htmlspecialchars($posts_array['post_title']) ?>
+                        Chapitre <?= htmlspecialchars($posts_array['id']) ?> : <?= htmlspecialchars($posts_array['post_title']) ?>
                         <em>le <?= $posts_array['post_date_fr'] ?></em>
                     </h3>
                     

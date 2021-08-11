@@ -54,11 +54,11 @@ function signIn() {
     {
         echo "Veuillez saisir un nom d'utilisateur valide.";
     }
-    elseif($password === NULL)
+    elseif ($password === NULL)
     {
         echo "Veuillez saisir un mot de passe.";
     }
-    elseif($confirmation_password !== $password || $confirmation_password === NULL)
+    elseif ($confirmation_password !== $password || $confirmation_password === NULL)
     {
         echo "Veuillez confirmer votre mot de passe.";
     }
@@ -95,17 +95,30 @@ function signIn() {
         $postManager = new PostManager($db);
         $posts = $postManager->getPosts();
 
-        require('view/home_view.php');
+        require 'view/home_view.php';
     }
 
-    function listPost($post_id)
+    function postAndComments()
+    {
+        $db = dbConnection();
+
+        $postManager = new PostManager($db);
+        $commentManager = new CommentManager($db);
+
+        $post = $postManager->getPost($_GET['id']);        
+        $comments = $commentManager->getComments($_GET['post_id']);
+
+        require 'view/post_view.php';
+    }
+
+    /* function listPost($post_id)
     {
         $db = dbConnection();
 
         $postManager = new PostManager($db);
         $post = $postManager->getPost($_GET['id']);
-        require('model/model_post.php');
-        require('view/post_view.php');
+
+        require 'view/post_view.php';
     }
 
     function listComments($post_id)
@@ -113,7 +126,21 @@ function signIn() {
         $db = dbConnection();
 
         $commentManager = new CommentManager($db);
-        $comments = $commentManager->getComments($_GET['id']);
-        require('model/model_comment.php');
-        require('view/post_view.php');
+        $comments = $commentManager->getComments($_GET['post_id']);
+        
+        require 'view/post_view.php';
+    } */
+
+    function addComment($post_id, $user_id, $comment_content)
+    {
+        $affected_lines = postComment($post_id, $user_id, $comment_content);
+
+        if ($affected_lines === false) {
+            die('Impossible d\'ajouter le commentaire !');
+        }
+        else {
+            header('Location: index.php?action=post&id=' . $post_id);
+        }
+
+        require 'view/post_view.php';
     }

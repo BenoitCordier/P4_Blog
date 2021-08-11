@@ -98,13 +98,13 @@ class PostManager {
         return $stmt;
     }
 
-    public function getPost($postId)
+    public function getPost($post_id)
     {
         $sql = 'SELECT id, post_title, post_content, DATE_FORMAT(post_date, \'%d/%m/%Y à %Hh%imin\') AS post_date_fr FROM post WHERE id = ?';
         $stmt = $this->_db->prepare($sql);
         $stmt->execute(array($postId));
         $post = $stmt->fetch();
 
-        return $stmt;
+        return $post;
     }
 }
