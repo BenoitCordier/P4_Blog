@@ -102,7 +102,7 @@ class PostManager {
     {
         $sql = 'SELECT id, post_title, post_content, DATE_FORMAT(post_date, \'%d/%m/%Y à %Hh%imin\') AS post_date_fr FROM post WHERE id = ?';
         $stmt = $this->_db->prepare($sql);
-        $stmt->execute(array($postId));
+        $stmt->execute(array($post_id));
         $post = $stmt->fetch();
 
         return $post;

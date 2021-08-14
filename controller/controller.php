@@ -98,42 +98,26 @@ function signIn() {
         require 'view/home_view.php';
     }
 
-    function postAndComments()
+    function postAndComments($post_id)
     {
         $db = dbConnection();
 
         $postManager = new PostManager($db);
         $commentManager = new CommentManager($db);
 
-        $post = $postManager->getPost($_GET['id']);        
-        $comments = $commentManager->getComments($_GET['post_id']);
+        $post = $postManager->getPost($post_id);        
+        $comments = $commentManager->getComments($post_id);
 
         require 'view/post_view.php';
     }
 
-    /* function listPost($post_id)
-    {
-        $db = dbConnection();
-
-        $postManager = new PostManager($db);
-        $post = $postManager->getPost($_GET['id']);
-
-        require 'view/post_view.php';
-    }
-
-    function listComments($post_id)
+    function addComment($post_id, $user_name, $comment_content)
     {
         $db = dbConnection();
 
         $commentManager = new CommentManager($db);
-        $comments = $commentManager->getComments($_GET['post_id']);
-        
-        require 'view/post_view.php';
-    } */
 
-    function addComment($post_id, $user_id, $comment_content)
-    {
-        $affected_lines = postComment($post_id, $user_id, $comment_content);
+        $affected_lines = $commentManager->postComment($post_id, $user_name, $comment_content);
 
         if ($affected_lines === false) {
             die('Impossible d\'ajouter le commentaire !');
@@ -141,6 +125,5 @@ function signIn() {
         else {
             header('Location: index.php?action=post&id=' . $post_id);
         }
-
         require 'view/post_view.php';
     }

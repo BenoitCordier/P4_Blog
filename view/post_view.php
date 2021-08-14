@@ -36,10 +36,10 @@
         $comments->closeCursor();
         ?>
 
-        <form action="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
+        <form action="index.php?action=addComment&id=<?= $post['id'] ?>" method="post">
             <div>
-                <label for="user_id">Auteur</label><br />
-                <input type="text" id="user_id" name="user_id" />
+                <label for="user_name">Auteur</label><br />
+                <input type="text" id="user_name" name="user_name" />
             </div>
             <div>
                 <label for="comment_content">Commentaire</label><br />

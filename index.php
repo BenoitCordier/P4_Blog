@@ -27,7 +27,7 @@ if (isset($_GET['action']))
     {
         if (isset($_GET['id']) && $_GET['id'] > 0)
         {
-            postAndComments();
+            postAndComments($_GET['id']);
         }
         else
         {
@@ -37,9 +37,9 @@ if (isset($_GET['action']))
     elseif ($_GET['action'] == 'addComment')
     {
         if (isset($_GET['id']) && $_GET['id'] > 0) {
-            if (!empty($_POST['author']) && !empty($_POST['comment']))
+            if (!empty($_POST['user_name']) && !empty($_POST['comment_content']))
             {
-                addComment($_GET['id'], $_POST['author'], $_POST['comment']);
+                addComment($_GET['id'], $_POST['user_name'], $_POST['comment_content']);
             }
             else
             {

@@ -106,19 +106,19 @@ class CommentManager {
 
     public function getComments($post_id)
     {
-        $sql = 'SELECT id, post_id, user_id, comment_content, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin\') AS comment_date_fr FROM comment WHERE post_id = ? ORDER BY comment_date DESC';
+        $sql = 'SELECT id, post_id, user_name, comment_content, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin\') AS comment_date_fr FROM comment WHERE post_id = ? ORDER BY comment_date DESC';
         $stmt = $this->_db->prepare($sql);
-        $stmt->execute(array($postId));
+        $stmt->execute(array($post_id));
         $comments = $stmt;
 
         return $comments;
     }
 
-    public function postComment($post_id, $user_id, $comment_content)
+    public function postComment($post_id, $user_name, $comment_content)
     {
-        $sql = 'INSERT INTO comment(post_id, user_id, comment_content, comment_date) VALUES(?, ?, ?, NOW())';
+        $sql = 'INSERT INTO comment(post_id, user_name, comment_content, comment_date) VALUES(?, ?, ?, NOW())';
         $stmt = $this->_db->prepare($sql);
-        $stmt->execute(array($post_id, $user_id, $comment_content));
+        $stmt->execute(array($post_id, $user_name, $comment_content));
         $affected_lines = $stmt;
 
         return $affected_lines;

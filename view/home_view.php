@@ -53,7 +53,7 @@
                     <p>
                         <?= nl2br(htmlspecialchars($posts_array['post_content'])) ?>
                         <br />
-                        <em><a href="view/post_view.php?post=<?= $posts_array['id'] ?>">Commentaires</a></em>
+                        <em><a href="index.php?action=post&id=<?= $posts_array['id'] ?>">Commentaires</a></em>
                     </p>
                 </div>
             <?php
