@@ -8,7 +8,7 @@
     </head>
 
     <body>
-        <p><a href='/P4_Blog/index.php'>Retour à la liste des billets</a></p>
+        <p><a href='/P4_Blog/index.php'> < Retour à l'accueil</a></p>
 
         <div class="news">
             <h1>
@@ -29,26 +29,34 @@
         while ($comments_array = $comments->fetch())
         {
         ?>
-        <p><strong><?= htmlspecialchars($comments_array['user_id']) ?></strong> le <?= $comments_array['comment_date_fr'] ?></p>
+        <p><strong><?= htmlspecialchars($comments_array['user_name']) ?></strong> le <?= $comments_array['comment_date_fr'] ?></p>
         <p><?= nl2br(htmlspecialchars($comments_array['comment_content'])) ?></p>
         <?php
         }
         $comments->closeCursor();
         ?>
-
+        <?php
+        if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['user_name']))
+        {?>
         <form action="index.php?action=addComment&id=<?= $post['id'] ?>" method="post">
             <div>
-                <label for="user_name">Auteur</label><br />
-                <input type="text" id="user_name" name="user_name" />
+                <h4><strong>
+                    Ecrire un nouveau commentaire :
+                </h4>
             </div>
             <div>
-                <label for="comment_content">Commentaire</label><br />
+                <input id="user_name" name="user_name" type="text" value="<?php echo $_SESSION['user_name']; ?>" readonly="readonly" />
+            </div>
+            <div>
                 <textarea id="comment_content" name="comment_content"></textarea>
             </div>
             <div>
                 <input type="submit" />
             </div>
         </form>
+        <?php
+        };
+        ?>
 
     </body>
 </html>

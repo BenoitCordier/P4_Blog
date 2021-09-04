@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'controller/controller.php';
 
 if (isset($_GET['action']))
@@ -10,6 +11,10 @@ if (isset($_GET['action']))
     elseif ($_GET['action'] == 'signIn')
     {
         signIn();
+    }
+    elseif ($_GET['action'] == 'logOut')
+    {
+        logOut();
     }
 }
 else
@@ -37,9 +42,9 @@ if (isset($_GET['action']))
     elseif ($_GET['action'] == 'addComment')
     {
         if (isset($_GET['id']) && $_GET['id'] > 0) {
-            if (!empty($_POST['user_name']) && !empty($_POST['comment_content']))
+            if (!empty($_POST['comment_content']))
             {
-                addComment($_GET['id'], $_POST['user_name'], $_POST['comment_content']);
+                addComment($_GET['id'], $_SESSION['user_name'], $_POST['comment_content']);
             }
             else
             {

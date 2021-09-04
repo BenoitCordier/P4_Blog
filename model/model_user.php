@@ -148,19 +148,12 @@ class UserManager {
         return $result;
     }
 
-    public function getUser($user_name) {
-        $sql = "SELECT user_name FROM user WHERE user_name = ?";
+    public function getInfo($user_name) {
+        $sql = "SELECT * FROM user WHERE user_name = ?";
         $stmt = $this->_db->prepare($sql);
         $stmt->execute([$user_name]);
         $result = $stmt->fetch();
         return $result;
     }
 
-    public function getPassHash($user_name) {
-        $sql = "SELECT password FROM user WHERE user_name = ?";
-        $stmt = $this->_db->prepare($sql);
-        $stmt->execute([$user_name]);
-        $result = $stmt->fetch();
-        return $result;
-    }
 }

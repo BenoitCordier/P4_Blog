@@ -14,17 +14,18 @@ function logIn() {
     $user_manager = new UserManager($db);
     $user_name = !empty($_POST['user_name']) ? $_POST['user_name'] : NULL;
     $password = !empty($_POST['password']) ? $_POST['password'] : NULL;
-    $is_user_exist = $user_manager->getUser($user_name);
-    $get_pass_hash = $user_manager->getPassHash($user_name);
+    $get_info = $user_manager->getInfo($user_name);
 
-    if ($is_user_exist)
+    if ($get_info)
     {
-        $is_password_correct = password_verify($_POST['password'], $get_pass_hash['password']);
+        $is_password_correct = password_verify($_POST['password'], $get_info['password']);
         if ($is_password_correct)
         {
             session_start();
-            $_SESSION['user_name'] = $user_name;
-            echo "Bonjour " . $user_name . ". Vous êtes connecté !";
+            $_SESSION['user_name'] = $get_info['user_name'];
+            $_SESSION['id'] = $get_info['id'];
+            $_SESSION['function'] = $get_info['function'];
+            header('Location: index.php');
         }
         else
         {
@@ -35,6 +36,12 @@ function logIn() {
     {
         echo 'Mauvais identifiant ou mot de passe !';
     }
+}
+
+function logOut() {
+    session_unset();
+    session_destroy();
+    header('Location: index.php');
 }
 
 function signIn() {
