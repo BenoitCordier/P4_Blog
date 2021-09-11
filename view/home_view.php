@@ -18,7 +18,19 @@
                 <input type="submit" value="Deconnexion" />
             </form>
         </div>
-        <div id='welcome'>
+        <?php
+        if ($_SESSION['function'] == 'admin')
+        {
+        ?>
+        <div id="admin_button">
+            <form action="index.php?action=admin">
+                <input type="submit" value="Administration" />
+            </form>
+        </div>
+        <?php
+        }
+        ?>
+        <div id="welcome">
             <h2>
                 Bonjour <?php echo $_SESSION['user_name']; ?> !
             </h2>

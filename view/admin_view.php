@@ -1,3 +1,7 @@
+<?php
+    if (session_status() == PHP_SESSION_ACTIVE && $_SESSION['function'] == 'admin')
+    {
+?>
 <!DOCTYPE html>
 
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
@@ -8,47 +12,41 @@
     </head>
 
     <body>
-        <p><a href='/P4_Blog/index.php'> < Retour à l'accueil</a></p>
-        <?php
-        if (session_status() == PHP_SESSION_ACTIVE && $_SESSION['function'] == 'admin')
-        {
-        ?>
-
-        <div id="new_article">
-            <button class="admin_button" type="button">
-                Poster un nouvel article
-            </button>
+        <div id="home_button">
+            <form action="index.php?action=listPosts">
+                <input type="submit" value="Retour à l'accueil" />
+            </form>
+        </div>
+       
+        <div id="admin_button">
+            <form action="index.php?action=newPost">
+                <input type="submit" value="Poster un nouvel article" />
+            </form>
         </div>
 
-        <div id="manage_article">
-            <button class="admin_button" type="button">
-                Gérer les articles
-            </button>
+        <div id="admin_button">
+            <form action="index.php?action=managePost">
+                <input type="submit" value="Gérer les articles" />
+            </form>
         </div>
 
-        <div id="manage_comment">
-            <button class="admin_button" type="button">
-                Gérer les commentaires
-            </button>
+        <div id="admin_button">
+            <form action="index.php?action=manageComment">
+                <input type="submit" value="Modérer les commentaires" />
+            </form>
         </div>
 
-        <div id="manage_user">
-            <button class="admin_button" type="button">
-                Gérer les utilisateurs
-            </button>
+        <div id="admin_button">
+            <form action="index.php?action=manageUser">
+                <input type="submit" value="Gérer les utilisateurs" />
+            </form>
         </div>
-        <?php
-        }
-        else
-        {
-        ?>
-        <div>
-            <h1>
-                Cette page n'est accessible qu'à un administrateur !
-            </h1>
-        </div>
-        <?php
-        }
-        ?>
     </body>
 </html>
+<?php
+    }
+    else
+    {
+        header('Location: index.php?action=listPosts');
+    }
+?>

@@ -8,7 +8,11 @@
     </head>
 
     <body>
-        <p><a href='/P4_Blog/index.php'> < Retour à l'accueil</a></p>
+        <div id="home_button">
+            <form action="index.php?action=listPosts">
+                <input type="submit" value="Retour à l'accueil" />
+            </form>
+        </div>
 
         <div class="news">
             <h1>
@@ -43,9 +47,6 @@
                 <h4><strong>
                     Ecrire un nouveau commentaire :
                 </h4>
-            </div>
-            <div>
-                <input id="user_name" name="user_name" type="text" value="<?php echo $_SESSION['user_name']; ?>" readonly="readonly" />
             </div>
             <div>
                 <textarea id="comment_content" name="comment_content"></textarea>

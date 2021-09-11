@@ -4,7 +4,59 @@ require_once 'model/model_user.php';
 require_once 'model/model_post.php';
 require_once 'model/model_comment.php';
 
-// method login et signin avec les vérifications
+// routeur config
+
+function identification() {
+    switch ($_GET['action'])
+    {
+        case 'logIn':
+            logIn();
+        break;
+
+        case 'signIn':
+            signIn();
+        break;
+
+        case 'logOut':
+            logOut();
+        break;
+
+        default:
+            listPosts();
+    }
+}
+
+function navigation() {
+    switch ($_GET['action'])
+    {
+        case 'listPosts':
+            listPosts();
+        break;
+        
+        case 'post':
+            if (isset($_GET['id']) && $_GET['id'] > 0)
+                {
+                postAndComments($_GET['id']);
+                }
+        break;
+
+        case 'addComment':
+            if (isset($_GET['id']) && $_GET['id'] > 0 && !empty($_POST['comment_content']))
+                {
+                addComment($_GET['id'], $_SESSION['user_name'], $_POST['comment_content']);
+                }
+        break;
+
+        case 'admin':
+           echo "Futur lien vers le panneau d'admin.";
+        break;    
+
+        default:
+            echo 'Une erreur est survenue !';
+    }
+}
+
+// identification
 
 $db = dbConnection();
 
@@ -21,9 +73,11 @@ function logIn() {
         $is_password_correct = password_verify($_POST['password'], $get_info['password']);
         if ($is_password_correct)
         {
-            session_start();
-            $_SESSION['user_name'] = $get_info['user_name'];
             $_SESSION['id'] = $get_info['id'];
+            $_SESSION['user_name'] = $get_info['user_name'];
+            $_SESSION['first_name'] = $get_info['first_name'];
+            $_SESSION['last_name'] = $get_info['last_name'];
+            $_SESSION['e_mail'] = $get_info['e_mail'];
             $_SESSION['function'] = $get_info['function'];
             header('Location: index.php');
         }
@@ -54,8 +108,8 @@ function signIn() {
     $e_mail = !empty($_POST['e_mail']) ? $_POST['e_mail'] : NULL;
     $first_name = !empty($_POST['first_name']) ? $_POST['first_name'] : NULL;
     $last_name = !empty($_POST['last_name']) ? $_POST['last_name'] : NULL;
-    $check_user = $user_manager->checkUser($user_name);
-    $check_email = $user_manager->checkEmail($e_mail);
+    $check_user = $user_manager->getInfo($user_name);
+    $check_email = $user_manager->getInfo($e_mail);
 
     if ($user_name === NULL)
     {
@@ -89,11 +143,16 @@ function signIn() {
     {
         $pass_hash = password_hash($password, PASSWORD_DEFAULT);
         $req = $user_manager->signIn($user_name, $pass_hash, $e_mail, $first_name, $last_name);
-        echo "Bienvenue " . $first_name . " " . $last_name . " ! Vous vous êtes enregistré sous le pseudonyme " . $user_name . " !";
+        echo "<div id='home_button'>
+                    <form action='index.php?action=listPosts'>
+                        <input type='submit' value='Retour' />
+                    </form>
+                </div>
+                <p>Bienvenue " . $first_name . " " . $last_name . " ! Vous vous êtes enregistré sous le pseudonyme " . $user_name . " !</p>";
     }
 }
 
-// method article et commentaire
+// navigation
 
     function listPosts()
     {
@@ -134,3 +193,7 @@ function signIn() {
         }
         require 'view/post_view.php';
     }
+
+    // administration
+    
+    
