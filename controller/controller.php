@@ -191,9 +191,98 @@ function signIn() {
         else {
             header('Location: index.php?action=post&id=' . $post_id);
         }
+        
         require 'view/post_view.php';
     }
 
     // administration
-    
-    
+
+    function checkPost()
+    {
+        $db = dbConnection();
+
+        $adminManager = new AdminManager($db);
+
+        $check_post = $adminManager->checkPost();
+    }
+
+    function newPost()
+    {
+        $db = dbConnection();
+
+        $adminManager = new AdminManager($db);
+
+        $new_post = $adminManager->newPost();
+    }
+
+    function modifyPost($id)
+    {
+        $db = dbConnection();
+
+        $adminManager = new AdminManager($db);
+
+        $modify_post = $adminManager->modifyPost($id);
+    }
+
+    function deletePost($id)
+    {
+        $db = dbConnection();
+
+        $adminManager = new AdminManager($db);
+
+        $delete_post = $adminManager->deletePost($id);
+    }
+
+    function checkComment()
+    {
+        $db = dbConnection();
+
+        $adminManager = new AdminManager($db);
+
+        $check_comment = $adminManager->checkComment();
+    }
+
+    function clearComment()
+    {
+        $db = dbConnection($id);
+
+        $adminManager = new AdminManager($db);
+
+        $clear_comment = $adminManager->clearComment($id);
+    }
+
+    function deleteComment($id)
+    {
+        $db = dbConnection();
+
+        $adminManager = new AdminManager($db);
+
+        $delete_comment = $adminManager->deleteComment($id);
+    }
+
+    function checkUser()
+    {
+        $db = dbConnection();
+
+        $adminManager = new AdminManager($db);
+
+        $check_user = $adminManager->checkUser();
+    }
+
+    function modifyUser($id)
+    {
+        $db = dbConnection();
+
+        $adminManager = new AdminManager($db);
+
+        $modify_user = $adminManager->modifyUser($id);
+    }
+
+    function deleteUser($id)
+    {
+        $db = dbConnection();
+
+        $adminManager = new AdminManager($db);
+
+        $delete_user = $adminManager->deleteUser($id);
+    }
