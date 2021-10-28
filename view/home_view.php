@@ -1,99 +1,61 @@
-<!DOCTYPE html>
-
-<html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta charset="utf-8" />
-        <title>Projet 4</title>
-        <link href="public/css/style.css" rel="stylesheet" />
-    </head>
-
-    <body>
-        <h1>Page d'accueil</h1>
-        <?php
-        if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['user_name']))
-        {
-        ?>
-        <div id="logout">
-            <form method="POST" action="index.php?action=logOut">
-                <input type="submit" value="Deconnexion" />
-            </form>
+<?php $title = "Page d'accueil" ?>
+<?php ob_start(); ?>
+<div class="flexCenterBig1">
+    <div id="flexCenterBig2">
+        <div id="flexLeft">
+            <h3>L'auteur</h3>
+            <p class="bio">
+                « Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor,
+                dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula
+                massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est
+                eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae,
+                consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras
+                vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim.»
+            </p>
         </div>
-        <?php
-        if ($_SESSION['function'] == 'admin')
-        {
-        ?>
-        <div id="admin_button">
-            <form action="index.php?action=admin">
-                <input type="submit" value="Administration" />
-            </form>
-        </div>
-        <?php
-        }
-        ?>
-        <div id="welcome">
-            <h2>
-                Bonjour <?php echo $_SESSION['user_name']; ?> !
-            </h2>
-        </div>
-        <?php
-        }
-        else
-        {
-        ?>
-        <div id="login_signin">
-                <h2>Se connecter</h2>
-                <form method="POST" action="index.php?action=logIn">
-                    <label for="user_login">Login :</label>
-                    <input id="user_login" type="text" name="user_name" />
-                    <label for="user_password">Password :</label>
-                    <input id="user_password" type="text" name="password" />
-                    <input type="submit" value="Connexion" />
-                </form>
-
-                <h2>S'enregistrer</h2>
-                <form method="POST" action="index.php?action=signIn">
-                    <label for="user_name">Login :</label>
-                    <input id="user_name" type="text" name="user_name" />
-                    <label for="first_name">Prénom :</label>
-                    <input id="first_name" type="text" name="first_name" />
-                    <label for="last_name">Nom :</label>
-                    <input id="last_name" type="text" name="last_name" />
-                    <label for="e_mail">E-mail :</label>
-                    <input id="e_mail" type="text" name="e_mail" />
-                    <label for="password">Mot de passe :</label>
-                    <input id="password" type="text" name="password" />
-                    <label for="confirmation_password">Confirmez votre mot de passe :</label>
-                    <input id="confirmation_password" type="text" name="confirmation_password" />
-                    <input type="submit" value="S'enregistrer">
-                </form>
-            </div>
-        <?php
-        };
-        ?>
-        
-
-        <div>
-            <h2>Derniers chapitres :</h2>
+        <div id="flexCenter">
+            <h2 id="lastChapter">Derniers chapitres</h2>
             <?php
-            while ($posts_array = $posts->fetch())
-            {
-            ?>
-                <div class="news">
-                    <h3>
-                        Chapitre <?= htmlspecialchars($posts_array['id']) ?> : <?= htmlspecialchars($posts_array['post_title']) ?>
-                        <em>le <?= $posts_array['post_date_fr'] ?></em>
-                    </h3>
-                    
-                    <p>
-                        <?= nl2br(htmlspecialchars($posts_array['post_content'])) ?>
-                        <br />
-                        <em><a href="index.php?action=post&id=<?= $posts_array['id'] ?>">Commentaires</a></em>
+            while ($postsArray = $posts->fetch()) {
+                ?>
+            <div class="chapter">
+                <h3><a
+                        href="index.php?action=post&id=<?= $postsArray['id'] ?>">
+                        <?= htmlspecialchars($postsArray['postTitle']) ?>
+                    </a></h3>
+                <h4>le <?= $postsArray['postDateFr'] ?>
+                </h4>
+                <p class="chapterContent">
+                    <?= nl2br(htmlspecialchars($postsArray['postContent'])) ?>
+                </p>
+                <a
+                    href="index.php?action=post&id=<?= $postsArray['id'] ?>">
+                    <p class="chapterComments">
+                        Commentaires
                     </p>
-                </div>
+                </a>
+            </div>
             <?php
             }
             $posts->closeCursor();
             ?>
         </div>
-    </body>
-</html>
+        <div id="flexRight">
+            <h3>Tous les chapitres</h3>
+            <?php
+            while ($postsArray = $posts->fetch()) {
+                ?>
+            <a
+                href="index.php?action=post&id=<?= $postsArray['id'] ?>">
+                <p><?= htmlspecialchars($postsArray['postTitle']) ?>
+                </p>
+            </a>
+            <?php
+            }
+            $posts->closeCursor();
+            ?>
+        </div>
+    </div>
+</div>
+<?php $content = ob_get_clean(); ?>
+<?php require 'template/template.php';

@@ -1,110 +1,168 @@
 <?php
-class Post {
+class Post
+{
     private $id;
-    private $post_title;
-    private $post_content;
-    private $post_date;
+    private $postTitle;
+    private $postContent;
+    private $postDate;
 
-// Constructeur
+    // Constructeur
 
-function __construct($post_title, $post_content, $post_date) {
-    $this->_post_title = $post_title;
-    $this->_post_content = $post_content;
-    $this->_post_date = $post_date;
-}
-
-// Getter
-
-public function id() {
-    return $this->_id;
-}
-
-public function postTitle() {
-    return $this->_post_title;
-}
-
-public function postContent() {
-    return $this->_post_content;
-}
-
-public function postDate() {
-    return $this->_post_date;
-}
-
-// Setter
-
-public function setId() {
-    $this->_id = $id;
-}
-
-public function setPostTitle($post_title) {
-    $this->_post_title = $post_title;
-}
-
-public function setPostContent($post_content) {
-    $this->_post_content = $post_content;
-}
-
-public function setPostDate($post_date) {
-    $this->_post_date = $post_date;
-}
-
-// Hydrate
-
-public function hydrate(array $data)
+    public function __construct($postTitle, $postContent, $postDate)
     {
-        if (isset($data['id']))
-        {
-        $this->setId($data['id']);
+        $this->_postTitle = $postTitle;
+        $this->_postContent = $postContent;
+        $this->_postDate = $postDate;
+    }
+
+    // Getter
+
+    public function id()
+    {
+        return $this->_id;
+    }
+
+    public function postTitle()
+    {
+        return $this->_postTitle;
+    }
+
+    public function postContent()
+    {
+        return $this->_postContent;
+    }
+
+    public function postDate()
+    {
+        return $this->_postDate;
+    }
+
+    // Setter
+
+    public function setId()
+    {
+        $this->_id = $id;
+    }
+
+    public function setPostTitle($postTitle)
+    {
+        $this->_postTitle = $postTitle;
+    }
+
+    public function setPostContent($postContent)
+    {
+        $this->_postContent = $postContent;
+    }
+
+    public function setPostDate($postDate)
+    {
+        $this->_postDate = $postDate;
+    }
+
+    // Hydrate
+
+    public function hydrate(array $data)
+    {
+        if (isset($data['id'])) {
+            $this->setId($data['id']);
         }
 
-        if (isset($data['post_title']))
-        {
-            $this->setPostTitle($data['post_title']);
+        if (isset($data['postTitle'])) {
+            $this->setPostTitle($data['postTitle']);
         }
 
-        if (isset($data['post_content']))
-        {
-            $this->setPostContent($data['post_content']);
+        if (isset($data['postContent'])) {
+            $this->setPostContent($data['postContent']);
         }
 
-        if (isset($data['post_date']))
-        {
-            $this->setPostDate($data['post_date']);
+        if (isset($data['postDate'])) {
+            $this->setPostDate($data['postDate']);
         }
     }
 }
 
-class PostManager {
+class PostManager
+{
     private $_db;
 
-    function __construct($db) {
+    public function __construct($db)
+    {
         $this->setDb($db);
     }
 
     public function setDb($db)
     {
-       $this->_db = $db;
+        $this->_db = $db;
     }
 
-// Method
+    // Method
 
     public function getPosts()
     {
-        $sql = 'SELECT id, post_title, post_content, DATE_FORMAT(post_date, \'%d/%m/%Y à %Hh%imin\') AS post_date_fr FROM post ORDER BY post_date DESC LIMIT 0, 5';
+        $sql = 'SELECT id, postTitle, postContent, DATE_FORMAT(postDate, \'%d/%m/%Y à %Hh%imin\') AS postDateFr FROM post ORDER BY postDate DESC LIMIT 0, 5';
         $stmt = $this->_db->prepare($sql);
         $posts = $stmt->execute();
         
         return $stmt;
     }
 
-    public function getPost($post_id)
+    public function getPost($postId)
     {
-        $sql = 'SELECT id, post_title, post_content, DATE_FORMAT(post_date, \'%d/%m/%Y à %Hh%imin\') AS post_date_fr FROM post WHERE id = ?';
+        $sql = 'SELECT id, postTitle, postContent, DATE_FORMAT(postDate, \'%d/%m/%Y à %Hh%imin\') AS postDateFr FROM post WHERE id = ?';
         $stmt = $this->_db->prepare($sql);
-        $stmt->execute(array($post_id));
+        $stmt->execute(array($postId));
         $post = $stmt->fetch();
 
         return $post;
+    }
+
+    public function checkPost()
+    {
+        $sql = 'SELECT id, postTitle, postContent, DATE_FORMAT(postDate, \'%d/%m/%Y à %Hh%imin\') AS postDateFr FROM post ORDER BY postDate DESC';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array());
+        $checkPost = $stmt;
+
+        return $checkPost;
+    }
+
+    public function newPost($postTitle, $postContent)
+    {
+        $sql = 'INSERT INTO post(postTitle, postContent, postDate) VALUES(?, ?, NOW())';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($postTitle, $postContent));
+        $newPost = $stmt;
+
+        return $newPost;
+    }
+
+    public function modifyPost($id)
+    {
+        $sql = 'SELECT id, postTitle, postContent FROM post WHERE id = ?';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($id));
+        $modifiedPost = $stmt;
+
+        return $modifiedPost;
+    }
+
+    public function updatePost($id, $newTitle, $newContent)
+    {
+        $sql = 'UPDATE post SET postTitle = :newTitle, postContent = :newContent WHERE id = :id';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($id, $newTitle, $newContent));
+        $updatedPost = $stmt;
+
+        return $updatedPost;
+    }
+
+    public function deletePost($id)
+    {
+        $sql = 'DELETE FROM post WHERE id = ?';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($id));
+        $deletedPost = $stmt;
+
+        return $deletedPost;
     }
 }

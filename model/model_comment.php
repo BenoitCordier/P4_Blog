@@ -1,126 +1,185 @@
 <?php
-class Comment {
+class Comment
+{
     private $id;
-    private $post_id;
-    private $user_id;
-    private $comment_content;
-    private $comment_date;
+    private $postId;
+    private $userId;
+    private $commentContent;
+    private $commentDate;
 
-// Constructeur
+    // Constructeur
 
-function __construct($post_id, $user_id, $comment_content, $comment_date) {
-    $this->_post_id = $post_id;
-    $this->_user_id = $user_id;
-    $this->_comment_content = $comment_content;
-    $this->_comment_date = $comment_date;
-}
-
-// Getter
-
-public function id() {
-    return $this->_id;
-}
-
-public function postId() {
-    return $this->_post_id;
-}
-
-public function userId() {
-    return $this->_user_id;
-}
-
-public function commentContent() {
-    return $this->_comment_content;
-}
-
-public function commentDate() {
-    return $this->_comment_date;
-}
-
-// Setter
-
-public function setId() {
-    $this->_id = $id;
-}
-
-public function setPostId($post_id) {
-    $this->_post_id = $post_id;
-}
-
-public function setUserId($user_id) {
-    $this->_user_id = $user_id;
-}
-
-public function setCommentContent($comment_content) {
-    $this->_comment_content = $comment_content;
-}
-
-public function setCommentDate($comment_date) {
-    $this->_comment_date = $comment_date;
-}
-
-// Hydrate
-
-public function hydrate(array $data)
+    public function __construct($postId, $userId, $commentContent, $commentDate)
     {
-        if (isset($data['id']))
-        {
-        $this->setId($data['id']);
+        $this->_postId = $postId;
+        $this->_userId = $userId;
+        $this->_commentContent = $commentContent;
+        $this->_commentDate = $commentDate;
+    }
+
+    // Getter
+
+    public function id()
+    {
+        return $this->_id;
+    }
+
+    public function postId()
+    {
+        return $this->_postId;
+    }
+
+    public function userId()
+    {
+        return $this->_userId;
+    }
+
+    public function commentContent()
+    {
+        return $this->_commentContent;
+    }
+
+    public function commentDate()
+    {
+        return $this->_commentDate;
+    }
+
+    // Setter
+
+    public function setId()
+    {
+        $this->_id = $id;
+    }
+
+    public function setPostId($postId)
+    {
+        $this->_postId = $postId;
+    }
+
+    public function setUserId($userId)
+    {
+        $this->_userId = $userId;
+    }
+
+    public function setCommentContent($commentContent)
+    {
+        $this->_commentContent = $commentContent;
+    }
+
+    public function setCommentDate($commentDate)
+    {
+        $this->_commentDate = $commentDate;
+    }
+
+    // Hydrate
+
+    public function hydrate(array $data)
+    {
+        if (isset($data['id'])) {
+            $this->setId($data['id']);
         }
 
-        if (isset($data['post_id']))
-        {
-            $this->setPostId($data['post_id']);
+        if (isset($data['postId'])) {
+            $this->setPostId($data['postId']);
         }
 
-        if (isset($data['user_id']))
-        {
-            $this->setUserId($data['user_id']);
+        if (isset($data['userId'])) {
+            $this->setUserId($data['userId']);
         }
 
-        if (isset($data['comment_content']))
-        {
-            $this->setCommentContent($data['comment_content']);
+        if (isset($data['commentContent'])) {
+            $this->setCommentContent($data['commentContent']);
         }
 
-        if (isset($data['comment_date']))
-        {
-            $this->setCommentDate($data['comment_date']);
+        if (isset($data['commentDate'])) {
+            $this->setCommentDate($data['commentDate']);
         }
     }
 }
 
-class CommentManager {
+class CommentManager
+{
     private $_db;
 
-    function __construct($db) {
+    public function __construct($db)
+    {
         $this->setDb($db);
     }
 
     public function setDb($db)
     {
-       $this->_db = $db;
+        $this->_db = $db;
     }
 
-// Method
+    // Method
 
-    public function getComments($post_id)
+    public function getComments($postId)
     {
-        $sql = 'SELECT id, post_id, user_name, comment_content, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin\') AS comment_date_fr FROM comment WHERE post_id = ? ORDER BY comment_date DESC';
+        $sql = 'SELECT id, postId, userName, commentContent, DATE_FORMAT(commentDate, \'%d/%m/%Y à %Hh%imin\') AS commentDateFr FROM comment WHERE postId = ? AND commentStatus = \'Ok\' ORDER BY commentDate DESC';
         $stmt = $this->_db->prepare($sql);
-        $stmt->execute(array($post_id));
+        $stmt->execute(array($postId));
         $comments = $stmt;
 
         return $comments;
     }
 
-    public function postComment($post_id, $user_name, $comment_content)
+    public function addComment($postId, $userName, $commentContent)
     {
-        $sql = 'INSERT INTO comment(post_id, user_name, comment_content, comment_date) VALUES(?, ?, ?, NOW())';
+        $sql = 'INSERT INTO comment(postId, userName, commentContent, commentDate) VALUES(?, ?, ?, NOW())';
         $stmt = $this->_db->prepare($sql);
-        $stmt->execute(array($post_id, $user_name, $comment_content));
-        $affected_lines = $stmt;
+        $stmt->execute(array($postId, $userName, $commentContent));
+        $affectedLines = $stmt;
 
-        return $affected_lines;
+        return $affectedLines;
+    }
+
+    public function checkComment()
+    {
+        $sql = 'SELECT id, postId, userName, commentContent, DATE_FORMAT(commentDate, \'%d/%m/%Y à %Hh%imin\') AS commentDateFr FROM comment WHERE commentStatus = \'Alert\' ORDER BY commentDate DESC';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array());
+        $checkComment = $stmt;
+
+        return $checkComment;
+    }
+
+    public function alertComment($id)
+    {
+        $sql ='UPDATE comment SET commentStatus = \'Alert\' WHERE id = ?';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($id));
+        $alertedComment = $stmt;
+
+        return $alertedComment;
+    }
+
+    public function clearComment($id)
+    {
+        $sql = 'UPDATE comment SET commentStatus = \'Ok\' WHERE id = ?';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($id));
+        $clearedComment = $stmt;
+
+        return $clearedComment;
+    }
+    
+    public function deleteComment($id)
+    {
+        $sql = 'DELETE FROM comment WHERE id = ?';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($id));
+        $deletedComment = $stmt;
+
+        return $deletedComment;
+    }
+
+    public function deleteAllComment($id)
+    {
+        $sql = 'DELETE FROM comment WHERE postId = ?';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($id));
+        $deletedAllComment = $stmt;
+
+        return $deletedAllComment;
     }
 }

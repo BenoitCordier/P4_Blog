@@ -1,143 +1,174 @@
 <?php
-class User {
+class User
+{
     private $_id;
-    private $_user_name;
+    private $_userName;
     private $_password;
-    private $_e_mail;
-    private $_first_name;
-    private $_last_name;
+    private $_eMail;
+    private $_firstName;
+    private $_lastName;
 
-// Constructeur
+    // Constructeur
 
-    function __construct($user_name, $password, $e_mail, $first_name, $last_name) {
-        $this->_user_name = $user_name;
+    public function __construct($userName, $password, $eMail, $firstName, $lastName)
+    {
+        $this->_userName = $userName;
         $this->_password = $password;
-        $this->_e_mail = $e_mail;
-        $this->_first_name = $first_name;
-        $this->_last_name = $last_name;
+        $this->_eMail = $eMail;
+        $this->_firstName = $firstName;
+        $this->_lastName = $lastName;
     }
 
-// Getters
+    // Getters
 
-    public function id() {
+    public function id()
+    {
         return $this->_id;
     }
 
-    public function user_name() {
-        return $this->_user_name;
+    public function userName()
+    {
+        return $this->_userName;
     }
 
-    public function password() {
+    public function password()
+    {
         return $this->_password;
     }
 
-    public function e_mail() {
-        return $this->_e_mail;
+    public function eMail()
+    {
+        return $this->_eMail;
     }
 
-    public function first_name() {
-        return $this->_first_name;
+    public function firstName()
+    {
+        return $this->_firstName;
     }
 
-    public function last_name() {
-        return $this->_last_name;
+    public function lastName()
+    {
+        return $this->_lastName;
     }
 
-// Setters
+    // Setters
 
-    public function setId() {
+    public function setId()
+    {
         $this->_id = $id;
     }
 
-    public function setUserName($user_name) {
-        $this->_user_name = $user_name;
+    public function setUserName($userName)
+    {
+        $this->_userName = $userName;
     }
 
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->_password = $password;
     }
 
-    public function setEmail($e_mail) {
-        $this->_e_mail = $e_mail;
+    public function setEmail($eMail)
+    {
+        $this->_eMail = $eMail;
     }
 
-    public function setFirstName($first_name) {
-        $this->_first_name = $first_name;
+    public function setFirstName($firstName)
+    {
+        $this->_firstName = $firstName;
     }
 
-    public function setLastName($last_name) {
-        $this->_last_name = $last_name;
+    public function setLastName($lastName)
+    {
+        $this->_lastName = $lastName;
     }
 
-// Hydrate
+    // Hydrate
 
     public function hydrate(array $data)
     {
-        if (isset($data['id']))
-        {
-        $this->setId($data['id']);
+        if (isset($data['id'])) {
+            $this->setId($data['id']);
         }
 
-        if (isset($data['user_name']))
-        {
-            $this->setUserName($data['user_name']);
+        if (isset($data['userName'])) {
+            $this->setUserName($data['userName']);
         }
 
-        if (isset($data['password']))
-        {
+        if (isset($data['password'])) {
             $this->setPassword($data['password']);
         }
 
-        if (isset($data['e_mail']))
-        {
-            $this->setEmail($data['e_mail']);
+        if (isset($data['eMail'])) {
+            $this->setEmail($data['eMail']);
         }
 
-        if (isset($data['first_name']))
-        {
-            $this->setFirstName($data['first_name']);
+        if (isset($data['firstName'])) {
+            $this->setFirstName($data['firstName']);
         }
 
-        if (isset($data['last_name']))
-        {
-            $this->setLastName($data['last_name']);
+        if (isset($data['lastName'])) {
+            $this->setLastName($data['lastName']);
         }
     }
 }
 
-class UserManager {
-
+class UserManager
+{
     private $_db;
 
-    function __construct($db) {
+    public function __construct($db)
+    {
         $this->setDb($db);
     }
 
     public function setDb($db)
     {
-       $this->_db = $db;
+        $this->_db = $db;
     }
 
-// Method
+    // Method
 
-    public function signIn($user_name, $pass_hash, $e_mail, $first_name, $last_name) {
-        $sql = "INSERT INTO user(user_name, first_name, last_name, e_mail, password, function) VALUES(:user_name, :first_name, :last_name, :e_mail, :pass_hash, 'user')";
+    public function signIn($userName, $passHash, $eMail, $firstName, $lastName)
+    {
+        $sql = "INSERT INTO user(userName, firstName, lastName, eMail, password, function) VALUES(:userName, :firstName, :lastName, :eMail, :passHash, 'user')";
         $stmt = $this->_db->prepare($sql);
-        $stmt->bindParam(':user_name', $user_name);
-        $stmt->bindParam(':pass_hash', $pass_hash);
-        $stmt->bindParam(':e_mail', $e_mail);
-        $stmt->bindParam(':first_name', $first_name);
-        $stmt->bindParam(':last_name', $last_name);
+        $stmt->bindParam(':userName', $userName);
+        $stmt->bindParam(':passHash', $passHash);
+        $stmt->bindParam(':eMail', $eMail);
+        $stmt->bindParam(':firstName', $firstName);
+        $stmt->bindParam(':lastName', $lastName);
         $result = $stmt->execute();
         return $result;
     }
 
-    public function getInfo($user_name) {
-        $sql = "SELECT * FROM user WHERE user_name = ?";
+    public function checkUsers()
+    {
+        $sql = "SELECT * FROM user";
         $stmt = $this->_db->prepare($sql);
-        $stmt->execute([$user_name]);
+        $stmt->execute(array());
+        $checkUsers = $stmt;
+
+        return $checkUsers;
+    }
+
+    public function getInfo($userName)
+    {
+        $sql = "SELECT * FROM user WHERE userName = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute([$userName]);
         $result = $stmt->fetch();
+
         return $result;
     }
 
+    public function deleteUser($id)
+    {
+        $sql = 'DELETE FROM user WHERE id = ?';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($id));
+        $deletedUser = $stmt;
+
+        return $deletedUser;
+    }
 }

@@ -1,63 +1,70 @@
-<!DOCTYPE html>
-
-<html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta charset="utf-8" />
-        <title>Projet 4</title>
-        <link href="public/css/style.css" rel="stylesheet" />
-    </head>
-
-    <body>
-        <div id="home_button">
-            <form action="index.php?action=listPosts">
-                <input type="submit" value="Retour à l'accueil" />
-            </form>
+<?php $title = htmlspecialchars($post['postTitle']) ?>
+<?php ob_start(); ?>
+<div class="flexCenterBig1">
+    <div id="flexPostView">
+        <div id="homeButton">
+            <a href="index.php?action=listPosts">
+                <p class="homeButton">Retour à l'accueil</p>
+            </a>
         </div>
 
-        <div class="news">
-            <h1>
-                Chapitre <?= htmlspecialchars($post['id']) ?> : <?= htmlspecialchars($post['post_title']) ?>
-            </h1>
+        <div class="chapter chapterSolo">
             <h3>
-                <em>le <?= $post['post_date_fr'] ?></em>
+                <?= htmlspecialchars($post['postTitle']) ?>
             </h3>
-            
-            <p>
-                <?= nl2br(htmlspecialchars($post['post_content'])) ?>
+            <h4>
+                le <?= $post['postDateFr'] ?>
+            </h4>
+            <p class="chapterContent">
+                <?= nl2br(htmlspecialchars($post['postContent'])) ?>
             </p>
         </div>
 
-        <h2>Commentaires</h2>
-
-        <?php
-        while ($comments_array = $comments->fetch())
-        {
-        ?>
-        <p><strong><?= htmlspecialchars($comments_array['user_name']) ?></strong> le <?= $comments_array['comment_date_fr'] ?></p>
-        <p><?= nl2br(htmlspecialchars($comments_array['comment_content'])) ?></p>
-        <?php
-        }
-        $comments->closeCursor();
-        ?>
-        <?php
-        if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['user_name']))
-        {?>
-        <form action="index.php?action=addComment&id=<?= $post['id'] ?>" method="post">
-            <div>
-                <h4><strong>
-                    Ecrire un nouveau commentaire :
+        <div class="commentSolo">
+            <h3>Commentaires</h3>
+            <?php
+                while ($commentsArray = $comments->fetch()) {
+                    ?>
+            <div class="commentUnique">
+                <h4><strong><?= htmlspecialchars($commentsArray['userName']) ?></strong>
+                    le <?= $commentsArray['commentDateFr'] ?>
                 </h4>
+                <p class="commentUniqueContent"><?= nl2br(htmlspecialchars($commentsArray['commentContent'])) ?>
+                </p>
+                <?php
+                    if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['userName'])) {
+                        ?>
+                <a
+                    href="index.php?action=alertComment&id=<?= $commentsArray['id']?>&postId=<?= $commentsArray['postId']?>">
+                    <p class="signal">Signaler
+                        le commentaire</p>
+                </a>
+                <?php
+                    }; ?>
             </div>
-            <div>
-                <textarea id="comment_content" name="comment_content"></textarea>
-            </div>
-            <div>
-                <input type="submit" />
-            </div>
-        </form>
-        <?php
-        };
-        ?>
+            <?php
+                }
+                $comments->closeCursor();
+            ?>
+            <?php
+    if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['userName'])) {?>
+            <form
+                action="index.php?action=addComment&id=<?= $post['id'] ?>"
+                method="post">
+                <h4>
+                    Ecrire un nouveau commentaire
+                </h4>
+                <div id="commentContent">
+                    <textarea id="tiny" name="commentContent" rows="4" cols="25"></textarea>
+                </div>
+                <input class="signal" type="submit" />
+            </form>
+        </div>
+    </div>
+</div>
 
-    </body>
-</html>
+<?php
+    };
+    ?>
+<?php $content = ob_get_clean(); ?>
+<?php require 'template/template.php';

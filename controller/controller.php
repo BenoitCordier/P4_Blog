@@ -4,285 +4,215 @@ require_once 'model/model_user.php';
 require_once 'model/model_post.php';
 require_once 'model/model_comment.php';
 
-// routeur config
-
-function identification() {
-    switch ($_GET['action'])
-    {
-        case 'logIn':
-            logIn();
-        break;
-
-        case 'signIn':
-            signIn();
-        break;
-
-        case 'logOut':
-            logOut();
-        break;
-
-        default:
-            listPosts();
-    }
-}
-
-function navigation() {
-    switch ($_GET['action'])
-    {
-        case 'listPosts':
-            listPosts();
-        break;
-        
-        case 'post':
-            if (isset($_GET['id']) && $_GET['id'] > 0)
-                {
-                postAndComments($_GET['id']);
-                }
-        break;
-
-        case 'addComment':
-            if (isset($_GET['id']) && $_GET['id'] > 0 && !empty($_POST['comment_content']))
-                {
-                addComment($_GET['id'], $_SESSION['user_name'], $_POST['comment_content']);
-                }
-        break;
-
-        case 'admin':
-           echo "Futur lien vers le panneau d'admin.";
-        break;    
-
-        default:
-            echo 'Une erreur est survenue !';
-    }
-}
+$db = dbConnection();
 
 // identification
 
-$db = dbConnection();
+function logIn()
+{
+    global $db;
 
-function logIn() {
-    $db = dbConnection();
+    $userManager = new UserManager($db);
+    $userName = !empty($_POST['userName']) ? $_POST['userName'] : null;
+    $password = !empty($_POST['password']) ? $_POST['password'] : null;
+    $getInfo = $userManager->getInfo($userName);
 
-    $user_manager = new UserManager($db);
-    $user_name = !empty($_POST['user_name']) ? $_POST['user_name'] : NULL;
-    $password = !empty($_POST['password']) ? $_POST['password'] : NULL;
-    $get_info = $user_manager->getInfo($user_name);
-
-    if ($get_info)
-    {
-        $is_password_correct = password_verify($_POST['password'], $get_info['password']);
-        if ($is_password_correct)
-        {
-            $_SESSION['id'] = $get_info['id'];
-            $_SESSION['user_name'] = $get_info['user_name'];
-            $_SESSION['first_name'] = $get_info['first_name'];
-            $_SESSION['last_name'] = $get_info['last_name'];
-            $_SESSION['e_mail'] = $get_info['e_mail'];
-            $_SESSION['function'] = $get_info['function'];
+    if ($getInfo) {
+        $isPasswordCorrect = password_verify($_POST['password'], $getInfo['password']);
+        if ($isPasswordCorrect) {
+            $_SESSION['id'] = $getInfo['id'];
+            $_SESSION['userName'] = $getInfo['userName'];
+            $_SESSION['firstName'] = $getInfo['firstName'];
+            $_SESSION['lastName'] = $getInfo['lastName'];
+            $_SESSION['eMail'] = $getInfo['eMail'];
+            $_SESSION['function'] = $getInfo['function'];
             header('Location: index.php');
-        }
-        else
-        {
+        } else {
             echo 'Mauvais identifiant ou mot de passe !';
         }
-    }
-    else
-    {
+    } else {
         echo 'Mauvais identifiant ou mot de passe !';
     }
 }
 
-function logOut() {
+function logOut()
+{
     session_unset();
     session_destroy();
     header('Location: index.php');
 }
 
-function signIn() {
-    $db = dbConnection();
+function signIn()
+{
+    global $db;
 
-    $user_manager = new UserManager($db);    
-    $user_name = !empty($_POST['user_name']) ? $_POST['user_name'] : NULL;
-    $password = !empty($_POST['password']) ? $_POST['password'] : NULL;
-    $confirmation_password = !empty($_POST['confirmation_password']) ? $_POST['confirmation_password'] : NULL;
-    $e_mail = !empty($_POST['e_mail']) ? $_POST['e_mail'] : NULL;
-    $first_name = !empty($_POST['first_name']) ? $_POST['first_name'] : NULL;
-    $last_name = !empty($_POST['last_name']) ? $_POST['last_name'] : NULL;
-    $check_user = $user_manager->getInfo($user_name);
-    $check_email = $user_manager->getInfo($e_mail);
+    $userManager = new UserManager($db);
+    $userName = !empty($_POST['userName']) ? $_POST['userName'] : null;
+    $password = !empty($_POST['password']) ? $_POST['password'] : null;
+    $confirmationPassword = !empty($_POST['confirmationPassword']) ? $_POST['confirmationPassword'] : null;
+    $eMail = !empty($_POST['eMail']) ? $_POST['eMail'] : null;
+    $firstName = !empty($_POST['firstName']) ? $_POST['firstName'] : null;
+    $lastName = !empty($_POST['lastName']) ? $_POST['lastName'] : null;
+    $checkUser = $userManager->getInfo($userName);
+    $checkEmail = $userManager->getInfo($eMail);
 
-    if ($user_name === NULL)
-    {
+    if ($userName === null) {
         echo "Veuillez saisir un nom d'utilisateur valide.";
-    }
-    elseif ($password === NULL)
-    {
+    } elseif ($password === null) {
         echo "Veuillez saisir un mot de passe.";
-    }
-    elseif ($confirmation_password !== $password || $confirmation_password === NULL)
-    {
+    } elseif ($confirmationPassword !== $password || $confirmationPassword === null) {
         echo "Veuillez confirmer votre mot de passe.";
-    }
-    elseif ($e_mail === NULL || !preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['e_mail']))
-    {
+    } elseif ($eMail === null || !preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['eMail'])) {
         echo "Veuillez saisir une adresse e-mail valide.";
-    }
-    elseif ($first_name === NULL || $last_name === NULL)
-    {
+    } elseif ($firstName === null || $lastName === null) {
         echo "Veuillez indiquer vos noms et prénoms.";
-    }
-    elseif ($check_user)
-    {
+    } elseif ($checkUser) {
         echo "Pseudonyme déjà utilisé, veuillez en choisir un autre.";
-    }
-    elseif ($check_email)
-    {
+    } elseif ($checkEmail) {
         echo "Adresse mail déjà utilisée, veuillez en choisir un autre.";
-    }
-    else
-    {
-        $pass_hash = password_hash($password, PASSWORD_DEFAULT);
-        $req = $user_manager->signIn($user_name, $pass_hash, $e_mail, $first_name, $last_name);
+    } else {
+        $passHash = password_hash($password, PASSWORD_DEFAULT);
+        $req = $userManager->signIn($userName, $passHash, $eMail, $firstName, $lastName);
         echo "<div id='home_button'>
-                    <form action='index.php?action=listPosts'>
-                        <input type='submit' value='Retour' />
-                    </form>
-                </div>
-                <p>Bienvenue " . $first_name . " " . $last_name . " ! Vous vous êtes enregistré sous le pseudonyme " . $user_name . " !</p>";
+                <button>
+                    <a href='index.php?action=listPosts'>Retour</a>
+                </button>
+              </div>
+                <p>Bienvenue " . $firstName . " " . $lastName . " ! Vous vous êtes enregistré sous le pseudonyme " . $userName . " !</p>";
     }
 }
 
 // navigation
 
-    function listPosts()
-    {
-        $db = dbConnection();
+function listPosts()
+{
+    global $db;
+    $postManager = new PostManager($db);
+    $posts = $postManager->getPosts();
 
-        $postManager = new PostManager($db);
-        $posts = $postManager->getPosts();
+    require 'view/home_view.php';
+}
 
-        require 'view/home_view.php';
+function postAndComments($postId)
+{
+    global $db;
+    $postManager = new PostManager($db);
+    $commentManager = new CommentManager($db);
+    $post = $postManager->getPost($postId);
+    $comments = $commentManager->getComments($postId);
+
+    require 'view/post_view.php';
+}
+
+function addComment($postId, $userName, $commentContent)
+{
+    global $db;
+    $commentManager = new CommentManager($db);
+    $affectedLines = $commentManager->addComment($postId, $userName, $commentContent);
+
+    if ($affectedLines === false) {
+        die('Impossible d\'ajouter le commentaire !');
+    } else {
+        header('Location: index.php?action=post&id=' . $postId);
     }
+    
+    require 'view/post_view.php';
+}
 
-    function postAndComments($post_id)
-    {
-        $db = dbConnection();
+function alertComment($id, $postId)
+{
+    global $db;
+    $commentManager = new CommentManager($db);
+    $alertComment = $commentManager->alertComment($id);
+    header('Location: index.php?action=post&id='. $postId);
 
-        $postManager = new PostManager($db);
-        $commentManager = new CommentManager($db);
+    require 'view/post_view.php';
+}
 
-        $post = $postManager->getPost($post_id);        
-        $comments = $commentManager->getComments($post_id);
+// administration
 
-        require 'view/post_view.php';
-    }
+function adminDashboardOnLoad()
+{
+    global $db;
+    $postManager = new PostManager($db);
+    $userManager = new UserManager($db);
+    $commentManager = new CommentManager($db);
+    $checkPost = $postManager->checkPost();
+    $checkComment = $commentManager->checkComment();
+    $checkUsers = $userManager->checkUsers();
 
-    function addComment($post_id, $user_name, $comment_content)
-    {
-        $db = dbConnection();
+    require 'view/admin_view.php';
+}
 
-        $commentManager = new CommentManager($db);
+function newPost($postTitle, $postContent)
+{
+    global $db;
+    $postManager = new PostManager($db);
+    $newPost = $postManager->newPost($postTitle, $postContent);
+    header('Location: index.php?action=admin');
 
-        $affected_lines = $commentManager->postComment($post_id, $user_name, $comment_content);
+    require 'view/admin_view.php';
+}
 
-        if ($affected_lines === false) {
-            die('Impossible d\'ajouter le commentaire !');
-        }
-        else {
-            header('Location: index.php?action=post&id=' . $post_id);
-        }
-        
-        require 'view/post_view.php';
-    }
+function modifyPost($id)
+{
+    global $db;
+    $postManager = new PostManager($db);
+    $modifiedPost = $postManager->modifyPost($id);
+    header('Location: index.php?action=admin');
+    var_dump($modifiedPost);
 
-    // administration
+    require 'view/admin_view.php';
+}
 
-    function checkPost()
-    {
-        $db = dbConnection();
+function updatePost($id, $newTitle, $newContent)
+{
+    global $db;
+    $postManager = new PostManager($db);
+    $modifyPost = $postManager->updatePost($id, $newTitle, $newContent);
+    header('Location: index.php?action=admin');
 
-        $adminManager = new AdminManager($db);
+    require 'view/admin_view.php';
+}
 
-        $check_post = $adminManager->checkPost();
-    }
+function deletePost($id)
+{
+    global $db;
+    $postManager = new PostManager($db);
+    $commentManager = new CommentManager($db);
+    $deletePost = $postManager->deletePost($id);
+    $deleteAllComment = $commentManager->deleteAllComment($id);
+    header('Location: index.php?action=admin');
 
-    function newPost()
-    {
-        $db = dbConnection();
+    require 'view/admin_view.php';
+}
 
-        $adminManager = new AdminManager($db);
+function clearComment($id)
+{
+    global $db;
+    $commentManager = new CommentManager($db);
+    $clearComment = $commentManager->clearComment($id);
+    header('Location: index.php?action=admin');
 
-        $new_post = $adminManager->newPost();
-    }
+    require 'view/admin_view.php';
+}
 
-    function modifyPost($id)
-    {
-        $db = dbConnection();
+function deleteComment($id)
+{
+    global $db;
+    $commentManager = new CommentManager($db);
+    $deleteComment = $commentManager->deleteComment($id);
+    header('Location: index.php?action=admin');
 
-        $adminManager = new AdminManager($db);
+    require 'view/admin_view.php';
+}
 
-        $modify_post = $adminManager->modifyPost($id);
-    }
+function deleteUser($id)
+{
+    global $db;
+    $userManager = new UserManager($db);
+    $deleteUser = $userManager->deleteUser($id);
+    header('Location: index.php?action=admin');
 
-    function deletePost($id)
-    {
-        $db = dbConnection();
-
-        $adminManager = new AdminManager($db);
-
-        $delete_post = $adminManager->deletePost($id);
-    }
-
-    function checkComment()
-    {
-        $db = dbConnection();
-
-        $adminManager = new AdminManager($db);
-
-        $check_comment = $adminManager->checkComment();
-    }
-
-    function clearComment()
-    {
-        $db = dbConnection($id);
-
-        $adminManager = new AdminManager($db);
-
-        $clear_comment = $adminManager->clearComment($id);
-    }
-
-    function deleteComment($id)
-    {
-        $db = dbConnection();
-
-        $adminManager = new AdminManager($db);
-
-        $delete_comment = $adminManager->deleteComment($id);
-    }
-
-    function checkUser()
-    {
-        $db = dbConnection();
-
-        $adminManager = new AdminManager($db);
-
-        $check_user = $adminManager->checkUser();
-    }
-
-    function modifyUser($id)
-    {
-        $db = dbConnection();
-
-        $adminManager = new AdminManager($db);
-
-        $modify_user = $adminManager->modifyUser($id);
-    }
-
-    function deleteUser($id)
-    {
-        $db = dbConnection();
-
-        $adminManager = new AdminManager($db);
-
-        $delete_user = $adminManager->deleteUser($id);
-    }
+    require 'view/admin_view.php';
+}

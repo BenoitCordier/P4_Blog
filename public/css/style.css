@@ -1,35 +1,297 @@
-h1, h2, h3
+/* Général */
+
+html
+{
+    background-color: rgba(255, 236, 201);
+    background-image: url("http://localhost/P4_Blog/public/images/bg1.jpg");
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+
+body {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    margin: 0
+    }
+
+header
+{
+    grid-area: 1 / 1 / 2 / 7;
+    background-color: rgba(255, 236, 201);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+header h1
 {
     text-align: center;
+    grid-area: 1 / 3 / 2 / 6;;
 }
 
-h3
+#control
 {
-    background-color: black;
-    color: white;
-    font-size: 0.9em;
-    margin-bottom: 0px;
+    grid-area: 1 / 6 / 2 / 8;
+    text-align: end;
+    margin-right: 5%;
 }
 
-.news p
+#control button
 {
-    background-color: #CCCCCC;
+    cursor: pointer;
+}
+
+footer
+{
+    grid-area: 8 / 1 / 9 / 7;
+    background-color: rgba(255, 236, 201);
+    width: 100%;
+    margin-top: 5%;
+    z-index: 3;
+}
+
+.button
+{
+    text-align: center;
+    border-radius: 0% 20% / 0% 40%;
+    border-color: rgba(255, 236, 201, 1);
+    border-width: 1em;
+    padding: 10px;
+    background-color: rgba(255, 236, 201, 1);
+}
+
+.logBtn
+{
+    text-align: center;
+    border-radius: 0% 20% / 0% 40%;
+    border-color: rgba(0, 0, 0, 1);
+    border-width: 1em;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 1);
+    color: rgba(255, 236, 201);
+}
+
+/* Home View */
+
+#gridLvl2
+{
+    grid-area: 2 / 1 / 8 / 7;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+#gridCenterDiv
+{
+    grid-area: 1 / 2 / 5 / 6;
+    z-index: 2;
+}
+
+#lastChapter
+{
+    background-color: rgba(255, 236, 201, 0.8);
+    border-radius: 0% 7% / 0% 35%;
+    text-align: center;
+    padding: 10px;
+    width: 40%;
+    margin-top: -5%;
+}
+
+#gridLeftDiv, #gridRightDiv
+{
+    background-color: rgba(255, 236, 201);
+    position: fixed;
+    width: 15%;
+    height: 100%;
+    top: 0;
+    z-index: 1;
+}
+
+#gridLeftDiv
+{
+    grid-area: 1 / 1 / 5 / 2;
+    left: 0;
+    text-align: justify;
+}
+
+#gridRightDiv
+{
+    grid-area: 1 / 6 / 5 / 7;
+    right: 0;
+}
+
+.chapter
+{
+    border-radius: 0% 20% / 0% 40%;
+    background-color: rgba(255, 236, 201, 0.5);
     margin-top: 0px;
+    width: 80%;
+    margin: auto;
 }
 
-.news
+.chapter h3
 {
-    width: 70%;
-    margin: auto;
+    font-size: 1.5em;
+    margin-bottom: 0px;
+    padding: 10px;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.chapter h4
+{
+    margin: 10px;
+    padding: 5px;
+}
+
+.chapterContent
+{
+    margin: 10px;
+    padding: 5px;
+}
+
+.chapterComments
+{
+    border-radius: 0% 20% / 0% 40%;
+    border-color: rgba(255, 236, 201, 1);
+    border-width: 1em;
+    margin-left: 75%;
+    margin-bottom: 0;
+    padding: 10px;
+    text-align: center;
+    background-color: rgba(255, 236, 201, 0.7);
+}
+
+.bio
+{
+    padding: 5%;
+    text-align: justify;
+}
+
+#gridLeftDiv h3
+{
+    padding-top: 60%;
+    padding-left: 5%;
 }
 
 a
 {
     text-decoration: none;
-    color: blue;
+    color: black;
 }
 
-.welcome h2
+/* Post View */
+
+#homeButtonChapter
+{
+    grid-area: 1 / 1 / 2 / 2;
+    text-align: center;
+    margin-top: 60%;
+    margin-right: 10%;
+    margin-left: 5%;
+}
+
+.chapterSolo
+{
+    grid-area: 2 / 2 / 5 / 6;
+    background-color: rgba(255, 236, 201, 0.5);
+    margin-top: 0%;
+    padding: 10px;
+    text-align: justify;
+}
+
+.chapterSolo h3
+{
+    font-size: 1.5em;
+    margin-bottom: 0px;
+    padding: 10px;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.chapterSolo h4
+{
+    margin: 10px;
+    padding: 10px;
+}
+
+.commentSolo
+{
+    grid-area: 5 / 2 / 8 / 6;
+    background-color: rgba(255, 236, 201, 0.5);
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.commentSolo h4
+{
+    margin: 10px;
+    padding: 5px;
+}
+
+.commentUnique
+{
+    background-color: rgba(255, 236, 201, 0.5);
+    border-radius: 0% 7% / 0% 35%;
+}
+
+.commentUniqueContent
+{
+    margin: 10px;
+    padding: 5px;
+}
+
+.signal
 {
     text-align: center;
+    margin-left: 75%;
+    border-radius: 0% 20% / 0% 40%;
+    border-color: rgba(255, 236, 201, 1);
+    border-width: 1em;
+    padding: 10px;
+    background-color: rgba(255, 236, 201, 0.7);
+}
+
+.commentInput form
+{
+    width: 50%;
+}
+
+/* Admin View */
+
+#homeButton
+{
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+#adminButtons
+{
+    grid-area: 2 / 2 / 3 / 6;
+}
+
+#checkPost, #newPost, #checkComment, #checkUser
+{
+    grid-area: 4 / 2 / 6 / 6;
+}
+
+#updatePost
+{
+    grid-area: 6 / 2 / 8 / 6;
 }

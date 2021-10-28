@@ -1,0 +1,513 @@
+/* Flex Box CSS Test */
+
+body
+{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+
+    background-color: rgba(255, 236, 201);
+    background-image: url("http://localhost/P4_Blog/public/images/bg1.jpg");
+    min-height: 100%;
+    min-width: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+
+    margin: 0
+}
+
+a
+{
+    color: black;
+    text-decoration: none;
+}
+
+#homeButton
+{
+    align-self: flex-start;
+    margin-left: 10%;
+}
+
+#homeButton:hover
+{
+    text-decoration: underline;
+}
+
+.homeButton
+{
+    cursor: pointer;
+    text-align: center;
+    border-radius: 0% 20% / 0% 40%;
+    border-color: rgba(255, 236, 201);
+    border-width: 1em;
+    background-color: rgba(255, 236, 201);
+    color: rgba(0, 0, 0);
+
+    padding: 10px;
+    text-align: center;
+}
+
+/* HEADER */
+
+header
+{
+    flex-grow: 1;
+
+    background-color: rgba(255, 236, 201);
+}
+
+header h1
+{
+    text-align: center;
+}
+
+#control
+{
+    text-align: end;
+    margin-right: 5%;
+}
+
+#control button
+{
+    cursor: pointer;
+}
+
+.logBtn
+{
+    cursor: pointer;
+    text-align: center;
+    border-radius: 0% 20% / 0% 40%;
+    border-color: rgba(0, 0, 0, 1);
+    border-width: 1em;
+    background-color: rgba(0, 0, 0, 1);
+    color: rgba(255, 236, 201);
+}
+
+.logBtn:hover
+{
+    text-decoration: underline;
+}
+
+#logIn form, #signIn form
+{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.flexLogIn, #logIn form .logBtn, #signIn form .logBtn
+{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 0% 20% / 0% 40%;
+    background-color: rgba(0, 0, 0, 1);
+    color: rgba(255, 236, 201);
+}
+
+.flexLogIn
+{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.flexLogIn input
+{
+    width: 80%;
+    margin: auto;
+}
+
+/* MAIN AREA */
+
+.flexCenterBig1
+{
+    flex-grow: 10;
+}
+
+#flexCenterBig2
+{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+    gap: 10px;
+}
+
+/* BIO */
+
+#flexLeft
+{
+    flex-basis: 60%;
+    flex-grow: 1;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
+
+    background-color: rgba(255, 236, 201, 0.7);
+}
+
+#flexLeft h3
+{
+    padding: 5%;
+}
+
+.bio
+{
+    padding: 5%;
+    text-align: justify;
+}
+
+/* CHAPTER */
+
+#flexCenter
+{
+    flex-grow: 5;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+#lastChapter, .commentSolo h3
+{
+    align-self: flex-start;
+
+    background-color: rgba(255, 236, 201, 0.8);
+    border-radius: 0% 7% / 0% 35%;
+    text-align: center;
+    padding: 10px;
+}
+
+.chapter, .commentUnique
+{   
+    align-self: center;
+
+    border-radius: 0% 20% / 0% 40%;
+    background-color: rgba(255, 236, 201, 0.5);
+    width: 80%;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    justify-content: space-evenly;
+}
+
+.chapter h3
+{
+    align-self: center;
+
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.chapter h3 a:hover
+{
+    text-decoration: underline;
+}
+
+.chapter h4, .commentUnique h4
+{
+    align-self: flex-start;
+
+    margin-left: 5%;
+}
+
+.chapterContent, .commentUniqueContent
+{
+    align-self: stretch;
+    text-align: justify;
+    flex-shrink: 2;
+
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.chapterComments, .signal
+{
+    align-self: flex-end;
+    flex-shrink: 1;
+    
+    background-color: rgba(255, 236, 201, 0.7);
+    border-radius: 0% 20% / 0% 40%;
+    border-color: rgba(255, 236, 201, 1);
+    border-width: 1em;
+    width: 15%;
+    margin-bottom: 0;
+    margin-left: auto;
+    padding: 10px;
+    text-align: center;
+}
+
+.chapterComments:hover, .signal:hover
+{
+    text-decoration: underline;
+}
+
+/* CHAPTER NAVIGATION */
+
+#flexRight
+{
+    flex-basis: 60%;
+    flex-grow: 1;
+
+    background-color: rgba(255, 236, 201, 0.7);
+}
+
+#flexRight h3
+{
+    padding: 5%;
+}
+
+/* FOOTER */
+
+footer
+{
+    flex-grow: 1;
+
+    background-color: rgba(255, 236, 201);
+}
+
+/* POST VIEW */
+
+#flexPostView
+{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.chapterSolo .chapterContent
+{
+    margin-bottom: 5%;
+}
+
+.commentSolo
+{
+    align-self: center;
+    background-color: rgba(255, 236, 201, 0.5);
+    width: 80%;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+.commentSolo h3
+{
+    margin-left: 5%;
+}
+
+.commentUnique
+{
+    width: 90%;
+}
+
+.commentSolo form
+{
+    align-self: center;
+
+    width: 90%;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    justify-content: space-evenly;
+    gap: 10px;
+
+    background-color: rgba(255, 236, 201, 0.7);
+    border-radius: 0% 20% / 0% 40%;
+    border-color: rgba(255, 236, 201, 1);
+    border-width: 1em;
+
+}
+
+.commentSolo form h4
+{
+    align-self: flex-start;
+
+    margin-left: 5%;
+}
+
+#commentContent
+{
+    align-self: center;
+
+    width: 80%;
+}
+
+.commentSolo form input
+{
+    align-self: flex-end;
+    flex-shrink: 1;
+    
+    cursor: pointer;
+    background-color: rgba(255, 236, 201, 0.7);
+    border-radius: 0% 20% / 0% 40%;
+    border: 1px solid rgba(255, 236, 201);
+    width: 15%;
+    margin-bottom: 0;
+    margin-left: auto;
+    text-align: center;
+}
+
+/* ADMIN VIEW */
+
+#admin
+{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+#adminButtons
+{
+    align-self: center;
+    background-color: rgba(255, 236, 201, 0.7);
+    width: 80%;
+}
+
+#adminButtons ul
+{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+.adminBtn
+{
+    align-self: center;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 0% 20% / 0% 40%;
+    border-color: rgba(255, 236, 201);
+    border-width: 1em;
+    background-color: rgba(255, 236, 201, 1);
+    color: rgba(0, 0, 0);
+    padding: 10px;
+}
+
+.adminBtn:hover
+{
+    text-decoration: underline;
+}
+
+#checkComment, #checkUser, #checkPost
+{
+    align-self: center;
+    width: 80%;
+}
+
+.checkComment, .checkUser, .checkPost
+{
+    align-self: center;
+    background-color: rgba(255, 236, 201, 0.5);
+    border-radius: 0% 20% / 0% 40%;
+}
+
+.chapterBtn, .commentBtn, .userBtn
+{
+    align-self: flex-end;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-content: stretch;
+    gap: 10px;
+}
+
+.chapterBtn .signal, .commentBtn .signal, .checkUser .signal
+{
+    align-self: center;
+    width: auto;
+}
+
+.updatePost, #newPost
+{
+    align-self: center;
+    background-color: rgba(255, 236, 201, 0.5);
+    border-radius: 0% 20% / 0% 40%;
+}
+
+#newPost
+{
+    width: 80%;
+}
+
+.updatePost
+{
+    margin-top: 3%;
+}
+
+.updatePost form, #newPost form
+{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+.updatePost h3, .updatePost h4, #newTitle, #newPost h3, #newPost h4, #postTitle
+{
+    align-self: flex-start;
+    margin-left: 10%;
+}
+
+.newContent
+{
+    align-self: center;
+
+    width: 80%;
+}
+
+.updatePost form input, #newPost form input
+{
+    align-self: flex-end;
+    flex-shrink: 1;
+    
+    cursor: pointer;
+    background-color: rgba(255, 236, 201, 0.7);
+    border-radius: 0% 20% / 0% 40%;
+    border: 1px solid rgba(255, 236, 201);
+    width: 15%;
+    margin-bottom: 0;
+    margin-left: auto;
+    text-align: center;
+    padding: 10px;
+}
+
+.updatePost form input:hover, #newPost form input:hover
+{
+    text-decoration: underline;
+}
+
+.commentTitle, .userName, .articleTitle, .updateTitle
+{
+    padding-top: 3%;
+}
+
+.checkComment h4, .checkComment p, .checkUser p, .checkPost h3, .checkPost h4
+{
+    align-self: flex-start;
+    margin-left: 5%;
+}
