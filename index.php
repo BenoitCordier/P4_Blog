@@ -36,7 +36,7 @@ function postAndCommentsRouting()
         break;
 
         case 'addComment':
-            if (isset($_GET['id']) && $_GET['id'] > 0 && !empty($_POST['commentContent'])) {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
                 addComment($_GET['id'], $_SESSION['userName'], $_POST['commentContent']);
             }
         break;

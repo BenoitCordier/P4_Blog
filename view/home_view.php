@@ -25,9 +25,9 @@
                     </a></h3>
                 <h4>le <?= $postsArray['postDateFr'] ?>
                 </h4>
-                <p class="chapterContent">
-                    <?= nl2br(htmlspecialchars($postsArray['postContent'])) ?>
-                </p>
+                <div class="chapterContent">
+                    <?= nl2br(htmlspecialchars_decode($postsArray['postContent'])) ?>
+                </div>
                 <a
                     href="index.php?action=post&id=<?= $postsArray['id'] ?>">
                     <p class="chapterComments">
@@ -43,16 +43,16 @@
         <div id="flexRight">
             <h3>Tous les chapitres</h3>
             <?php
-            while ($postsArray = $posts->fetch()) {
+            while ($titlesArray = $titles->fetch()) {
                 ?>
             <a
-                href="index.php?action=post&id=<?= $postsArray['id'] ?>">
-                <p><?= htmlspecialchars($postsArray['postTitle']) ?>
+                href="index.php?action=post&id=<?= $titlesArray['id'] ?>">
+                <p><?= htmlspecialchars($titlesArray['postTitle']) ?>
                 </p>
             </a>
             <?php
             }
-            $posts->closeCursor();
+            $titles->closeCursor();
             ?>
         </div>
     </div>

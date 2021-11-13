@@ -23,14 +23,14 @@ class ConnexionControl {
             this.signInDiv.style.display = 'none';
             localStorage.clear();
             localStorage.setItem('logInState', 'hide');
-        };
+        }
         if (logInState === 'hide' || logInState == null) {
             e.preventDefault();
             this.logInDiv.style.display = 'block';
             this.signInDiv.style.display = 'none';
             localStorage.clear();
             localStorage.setItem('logInState', 'show');
-        };
+        }
     }
 
     signInControl(e) {
@@ -43,13 +43,13 @@ class ConnexionControl {
             this.signInDiv.style.display = 'none';
             localStorage.clear();
             localStorage.setItem('signInState', 'hide');
-        };
+        }
         if (signInState === 'hide' || signInState == null) {
             e.preventDefault();
             this.signInDiv.style.display = 'block';
             this.logInDiv.style.display = 'none';
             localStorage.clear();
             localStorage.setItem('signInState', 'show');
-        };
+        }
     }
 }

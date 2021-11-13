@@ -9,7 +9,15 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Projet 4</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Billet Simple pour l'Alaska">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta property="og:url" content="http://jeanforteroche.bcordier.fr/index.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Billet Simple pour l'Alaska" />
+    <meta property="og:description" content="Billet Simple pour l'Alaska - Le nouveau livre de Jean Forteroche" />
+    <title>Tableau de bord</title>
     <link href="public/css/style_alt.css" rel="stylesheet" />
 
     <script src="https://cdn.tiny.cloud/1/g5suvpkd4ia0orxi5hyg7ykb4lhbo8ekfij53v9ejdf331m5/tinymce/5/tinymce.min.js"
@@ -47,12 +55,12 @@
                 </li>
             </ul>
         </div>
-        <div id="checkPost">
+        <div id="checkPost" style="display: none;">
             <?php
                 while ($postsAdminArray = $checkPost->fetch()) {
                     ?>
 
-            <div class="checkPost" style="display: none;">
+            <div class="checkPost">
                 <h3 class="articleTitle"><a
                         href="index.php?action=post&id=<?= $postsAdminArray['id'] ?>">
                         <?= htmlspecialchars($postsAdminArray['postTitle']) ?>
@@ -61,16 +69,13 @@
                 <h4>
                     le <?= $postsAdminArray['postDateFr'] ?>
                 </h4>
-                <p class="chapterContent">
-                    <?= nl2br(htmlspecialchars($postsAdminArray['postContent'])) ?>
-                    <br />
-                </p>
+                <div class="chapterContent">
+                    <?= nl2br(htmlspecialchars_decode($postsAdminArray['postContent'])) ?>
+                </div>
                 <div class="chapterBtn">
-                    <a
-                        href="index.php?action=modifyPost&id=<?= $postsAdminArray['id']?>">
-                        <p class="modifyPost signal">Modifier
-                            l'article</p>
-                    </a>
+
+                    <p class="modifyPost signal">Modifier
+                        l'article</p>
                     <a
                         href="index.php?action=deletePost&id=<?= $postsAdminArray['id']?>">
                         <p id="deletePost" class="signal">Supprimer
@@ -92,7 +97,7 @@
                     <h4>Article</h4>
                     <div class="newContent">
                         <textarea id="newContent" class="tiny" name="newContent" rows="8"
-                            cols="80"><?= nl2br(htmlspecialchars($postsAdminArray['postContent'])) ?></textarea>
+                            cols="80"><?= nl2br(htmlspecialchars_decode($postsAdminArray['postContent'])) ?></textarea>
                     </div>
                     <input type="submit" value="Modifier" />
                 </form>
@@ -130,8 +135,8 @@
                 <h4><?= htmlspecialchars($commentsAdminArray['userName']) ?>
                     le <?= $commentsAdminArray['commentDateFr'] ?>
                 </h4>
-                <p><?= nl2br(htmlspecialchars($commentsAdminArray['commentContent'])) ?>
-                </p>
+                <div><?= nl2br(htmlspecialchars_decode($commentsAdminArray['commentContent'])) ?>
+                </div>
                 <div class="commentBtn">
                     <a
                         href="index.php?action=deleteComment&id=<?= $commentsAdminArray['id']?>">

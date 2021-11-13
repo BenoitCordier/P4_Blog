@@ -15,9 +15,9 @@
             <h4>
                 le <?= $post['postDateFr'] ?>
             </h4>
-            <p class="chapterContent">
-                <?= nl2br(htmlspecialchars($post['postContent'])) ?>
-            </p>
+            <div class="chapterContent">
+                <?= nl2br(htmlspecialchars_decode($post['postContent'])) ?>
+            </div>
         </div>
 
         <div class="commentSolo">
@@ -26,11 +26,11 @@
                 while ($commentsArray = $comments->fetch()) {
                     ?>
             <div class="commentUnique">
-                <h4><strong><?= htmlspecialchars($commentsArray['userName']) ?></strong>
+                <h4><?= htmlspecialchars($commentsArray['userName']) ?>
                     le <?= $commentsArray['commentDateFr'] ?>
                 </h4>
-                <p class="commentUniqueContent"><?= nl2br(htmlspecialchars($commentsArray['commentContent'])) ?>
-                </p>
+                <div class="commentUniqueContent"><?= nl2br(htmlspecialchars_decode($commentsArray['commentContent'])) ?>
+                </div>
                 <?php
                     if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['userName'])) {
                         ?>
@@ -47,7 +47,8 @@
                 $comments->closeCursor();
             ?>
             <?php
-    if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['userName'])) {?>
+    if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['userName'])) {
+        ?>
             <form
                 action="index.php?action=addComment&id=<?= $post['id'] ?>"
                 method="post">
@@ -55,7 +56,7 @@
                     Ecrire un nouveau commentaire
                 </h4>
                 <div id="commentContent">
-                    <textarea id="tiny" name="commentContent" rows="4" cols="25"></textarea>
+                    <textarea id="tiny" class="commentContent" name="commentContent" rows="4" cols="25"></textarea>
                 </div>
                 <input class="signal" type="submit" />
             </form>

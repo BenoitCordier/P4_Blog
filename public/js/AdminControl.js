@@ -18,40 +18,20 @@ class AdminControl {
         this.btnCheckUser.addEventListener('click', (e) => {this.checkUserControl(e)});
         this.btnModifyPost.addEventListener('click', (e) => {this.modifyPostControl(e)});
 
-        window.onload = this.newPostControl(e);
-        window.onload = this.checkPostControl(e);
-        window.onload = this.checkCommentControl(e);
-        window.onload = this.checkUserControl(e);
-        window.onload = this.modifyPostControl(e); 
+        window.onload = this.newPostControl();
+        window.onload = this.checkPostControl();
+        window.onload = this.checkCommentControl();
+        window.onload = this.checkUserControl();
+        window.onload = this.modifyPostControl(); 
     }
 
-    newPostControl(e) {
-        e.preventDefault();
-        var newPostState = localStorage.getItem('newPostState');
-
-        if (newPostState === 'show') {
-            e.preventDefault();
-            this.newPostDiv.style.display = 'none';
-            this.checkPostDiv.style.display = 'none';
-            this.checkCommentDiv.style.display = 'none';
-            this.checkUserDiv.style.display = 'none';
-            this.updatePostDiv.style.display = 'none';
-            localStorage.clear();
-            localStorage.setItem('newPostState', 'hide');
-        };
-        if (newPostState === 'hide' || newPostState == null) {
-            this.newPostDiv.style.display = 'block';
-            this.checkPostDiv.style.display = 'none';
-            this.checkCommentDiv.style.display = 'none';
-            this.checkUserDiv.style.display = 'none';
-            this.updatePostDiv.style.display = 'none';
-            localStorage.clear();
-            localStorage.setItem('newPostState', 'show');
-        };
-    };
+    /*showHide(checkPostDiv) {
+        for (var i = 0; i < checkPostDiv.length; i++) {
+            this.checkPostDiv[i].style.display = (this.checkPostDiv.style.display == 'block') ? 'none' : 'block';
+        }
+    }*/
 
     checkPostControl(e) {
-        e.preventDefault();
         var checkPostState = localStorage.getItem('checkPostState');
 
         if (checkPostState === 'show') {
@@ -71,11 +51,34 @@ class AdminControl {
             this.updatePostDiv.style.display = 'none';
             localStorage.clear();
             localStorage.setItem('checkPostState', 'show');
-        };
-    };
+        }
+    }
+
+    newPostControl(e) {
+        var newPostState = localStorage.getItem('newPostState');
+
+        if (newPostState === 'show') {
+            e.preventDefault();
+            this.newPostDiv.style.display = 'none';
+            this.checkPostDiv.style.display = 'none';
+            this.checkCommentDiv.style.display = 'none';
+            this.checkUserDiv.style.display = 'none';
+            this.updatePostDiv.style.display = 'none';
+            localStorage.clear();
+            localStorage.setItem('newPostState', 'hide');
+        }
+        if (newPostState === 'hide' || newPostState == null) {
+            this.newPostDiv.style.display = 'block';
+            this.checkPostDiv.style.display = 'none';
+            this.checkCommentDiv.style.display = 'none';
+            this.checkUserDiv.style.display = 'none';
+            this.updatePostDiv.style.display = 'none';
+            localStorage.clear();
+            localStorage.setItem('newPostState', 'show');
+        }
+    }
 
     checkCommentControl(e) {
-        e.preventDefault();
         var checkCommentState = localStorage.getItem('checkCommentState');
 
         if (checkCommentState === 'show') {
@@ -86,7 +89,7 @@ class AdminControl {
             this.updatePostDiv.style.display = 'none';
             localStorage.clear();
             localStorage.setItem('checkCommentState', 'hide');
-        };
+        }
         if (checkCommentState === 'hide' || checkCommentState == null) {
             this.checkCommentDiv.style.display = 'block';
             this.newPostDiv.style.display = 'none';
@@ -95,11 +98,10 @@ class AdminControl {
             this.updatePostDiv.style.display = 'none';
             localStorage.clear();
             localStorage.setItem('checkCommentState', 'show');
-        };
-    };
+        }
+    }
 
     checkUserControl(e) {
-        e.preventDefault();
         var checkUserState = localStorage.getItem('checkUserState');
 
         if (checkUserState === 'show') {
@@ -110,7 +112,7 @@ class AdminControl {
             this.updatePostDiv.style.display = 'none';
             localStorage.clear();
             localStorage.setItem('checkUserState', 'hide');
-        };
+        }
         if (checkUserState === 'hide' || checkUserState == null) {
             this.checkUserDiv.style.display = 'block';
             this.checkPostDiv.style.display = 'none';
@@ -119,11 +121,10 @@ class AdminControl {
             this.updatePostDiv.style.display = 'none';
             localStorage.clear();
             localStorage.setItem('checkUserState', 'show');
-        };
-    };
+        }
+    }
 
     modifyPostControl(e) {
-        e.preventDefault();
         var modifyPostState = localStorage.getItem('modifyPostState');
 
         if (modifyPostState === 'show') {
@@ -133,7 +134,7 @@ class AdminControl {
             this.newPostDiv.style.display = 'none';
             localStorage.clear();
             localStorage.setItem('modifyPostState', 'hide');
-        };
+        }
         if (modifyPostState === 'hide' || modifyPostState == null) {
             this.updatePostDiv.style.display = 'block';
             this.checkUserDiv.style.display = 'none';
@@ -141,6 +142,6 @@ class AdminControl {
             this.newPostDiv.style.display = 'none';
             localStorage.clear();
             localStorage.setItem('modifyPostState', 'show');
-        };
-    };
+        }
+    }
 }

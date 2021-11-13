@@ -106,6 +106,15 @@ class PostManager
         return $stmt;
     }
 
+    public function getTitles()
+    {
+        $sql = 'SELECT id, postTitle, DATE_FORMAT(postDate, \'%d/%m/%Y à %Hh%imin\') AS postDateFr FROM post ORDER BY postDate';
+        $stmt = $this->_db->prepare($sql);
+        $titles = $stmt->execute();
+
+        return $stmt;
+    }
+
     public function getPost($postId)
     {
         $sql = 'SELECT id, postTitle, postContent, DATE_FORMAT(postDate, \'%d/%m/%Y à %Hh%imin\') AS postDateFr FROM post WHERE id = ?';
@@ -150,7 +159,7 @@ class PostManager
     {
         $sql = 'UPDATE post SET postTitle = :newTitle, postContent = :newContent WHERE id = :id';
         $stmt = $this->_db->prepare($sql);
-        $stmt->execute(array($id, $newTitle, $newContent));
+        $stmt->execute(array("id" => $id, "newTitle" => $newTitle, "newContent" => $newContent));
         $updatedPost = $stmt;
 
         return $updatedPost;

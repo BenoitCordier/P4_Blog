@@ -89,6 +89,7 @@ function listPosts()
     global $db;
     $postManager = new PostManager($db);
     $posts = $postManager->getPosts();
+    $titles = $postManager->getTitles();
 
     require 'view/home_view.php';
 }
@@ -108,12 +109,19 @@ function addComment($postId, $userName, $commentContent)
 {
     global $db;
     $commentManager = new CommentManager($db);
-    $affectedLines = $commentManager->addComment($postId, $userName, $commentContent);
+    $commentContentOnPost = !empty($_POST['commentContent']) ? $_POST['commentContent'] : null;
 
-    if ($affectedLines === false) {
-        die('Impossible d\'ajouter le commentaire !');
-    } else {
+    if ($commentContentOnPost === null) {
+        echo 'Impossible d\'ajouter le commentaire !';
         header('Location: index.php?action=post&id=' . $postId);
+    } else {
+        $affectedLines = $commentManager->addComment($postId, $userName, $commentContent);
+        header('Location: index.php?action=post&id=' . $postId);
+
+        if ($affectedLines === false) {
+            echo 'Impossible d\'ajouter le commentaire !';
+            header('Location: index.php?action=post&id=' . $postId);
+        }
     }
     
     require 'view/post_view.php';
