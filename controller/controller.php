@@ -147,6 +147,7 @@ function adminDashboardOnLoad()
     $commentManager = new CommentManager($db);
     $checkPost = $postManager->checkPost();
     $checkComment = $commentManager->checkComment();
+    $checkAllComment = $commentManager->checkAllComment();
     $checkUsers = $userManager->checkUsers();
 
     require 'view/admin_view.php';

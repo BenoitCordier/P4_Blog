@@ -28,11 +28,10 @@
                 <div class="chapterContent">
                     <?= nl2br(htmlspecialchars_decode($postsArray['postContent'])) ?>
                 </div>
-                <a
-                    href="index.php?action=post&id=<?= $postsArray['id'] ?>">
-                    <p class="chapterComments">
-                        Commentaires
-                    </p>
+                <a href="index.php?action=post&id=<?= $postsArray['id'] ?>"
+                    class="chapterComments signal">
+                    Commentaires
+
                 </a>
             </div>
             <?php
@@ -41,14 +40,13 @@
             ?>
         </div>
         <div id="flexRight">
-            <h3>Tous les chapitres</h3>
+            <h3>Les chapitres</h3>
             <?php
             while ($titlesArray = $titles->fetch()) {
                 ?>
             <a
                 href="index.php?action=post&id=<?= $titlesArray['id'] ?>">
-                <p><?= htmlspecialchars($titlesArray['postTitle']) ?>
-                </p>
+                <?= htmlspecialchars($titlesArray['postTitle']) ?>
             </a>
             <?php
             }

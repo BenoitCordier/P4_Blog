@@ -2,11 +2,8 @@
 <?php ob_start(); ?>
 <div class="flexCenterBig1">
     <div id="flexPostView">
-        <div id="homeButton">
-            <a href="index.php?action=listPosts">
-                <p class="homeButton">Retour à l'accueil</p>
-            </a>
-        </div>
+        <a href="index.php?action=listPosts" class="homeButton">Retour à l'accueil
+        </a>
 
         <div class="chapter chapterSolo">
             <h3>
@@ -34,10 +31,9 @@
                 <?php
                     if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['userName'])) {
                         ?>
-                <a
-                    href="index.php?action=alertComment&id=<?= $commentsArray['id']?>&postId=<?= $commentsArray['postId']?>">
-                    <p class="signal">Signaler
-                        le commentaire</p>
+                <a href="index.php?action=alertComment&id=<?= $commentsArray['id']?>&postId=<?= $commentsArray['postId']?>"
+                    class="signal">Signaler
+                    le commentaire
                 </a>
                 <?php
                     }; ?>

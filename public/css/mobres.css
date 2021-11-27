@@ -1,0 +1,42 @@
+@media all and (max-width: 768px) {
+
+    #control ul li
+    {
+        display: block;
+    }
+	
+    #flexCenterBig2
+    {
+        flex-flow: column nowrap;
+    }
+
+    #flexCenter
+    {
+        display: none;
+    }
+
+    #flexLeft h3, #flexRight h3
+    {
+        padding-bottom: 0;
+    }
+
+    #flexRight a
+    {
+        padding-top: 0;
+    }
+
+    .bio
+    {
+        padding-top: 0;
+    }
+
+    #logIn form, #signIn form
+    {
+        flex-flow: row wrap;
+    }
+
+        #adminButtons ul
+    {
+        flex-flow: row wrap;
+    }
+}

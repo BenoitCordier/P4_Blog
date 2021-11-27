@@ -1,0 +1,12 @@
+@media all and (min-width: 1025px) and (max-width: 1200px) {
+	
+    #logIn form, #signIn form
+    {
+        flex-flow: row wrap;
+    }
+
+        #adminButtons ul
+    {
+        flex-flow: row wrap;
+    }
+}

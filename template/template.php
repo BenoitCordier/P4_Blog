@@ -15,7 +15,12 @@
 
     <title><?= $title ?>
     </title>
-    <link href="public/css/style_alt.css" rel="stylesheet" />
+    <link href="public/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" media="(max-width: 768px)" href="public/css/mobres.css">
+    <link rel="stylesheet" type="text/css" media="(min-width: 769px) and (max-width: 1024px)"
+        href="public/css/lowres.css">
+    <link rel="stylesheet" type="text/css" media="(min-width: 1025px) and (max-width: 1200px)"
+        href="public/css/medres.css">
     <script src="https://cdn.tiny.cloud/1/g5suvpkd4ia0orxi5hyg7ykb4lhbo8ekfij53v9ejdf331m5/tinymce/5/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script type="text/javascript">
@@ -36,25 +41,25 @@
                 <?php
                 if (session_status() !== PHP_SESSION_ACTIVE || !isset($_SESSION['userName'])) {
                     ?>
-                <li style="display:inline" id="connexion">
-                    <button class="logBtn">Se connecter</button>
+                <li id="connexion" class="logBtn1">
+                    Se connecter
                 </li>
-                <li style="display:inline" id="registration">
-                    <button class="logBtn">S'enregistrer</button>
+                <li id="registration" class="logBtn1">
+                    S'enregistrer
                 </li>
                 <?php
                 }
             if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['userName'])) {
                 ?>
-                <li style="display:inline"><a href="index.php?action=logOut">
-                        <button class="logBtn">Déconnexion</button>
-                    </a></li>
+                <li class="logBtn1">
+                    <a href="index.php?action=logOut">Déconnexion</a>
+                </li>
                 <?php
             if ($_SESSION['function'] == 'admin' && (basename($_SERVER['PHP_SELF']) != 'admin.php')) {
                 ?>
-                <li style="display:inline"><a href="index.php?action=admin">
-                        <button class="logBtn">Administration</button>
-                    </a></li>
+                <li class="logBtn1">
+                    <a href="index.php?action=admin">Administration</a>
+                </li>
                 <?php
             }
             }
@@ -77,7 +82,7 @@
                     <label for="userPassword">Password</label>
                     <input id="userPassword" class="logField" type="text" name="password" />
                 </div>
-                <input type="submit" class="logBtn" value="Connexion" />
+                <input type="submit" class="logBtn2" value="Connexion" />
             </form>
         </div>
         <div id="signIn" style="display: none;">
@@ -107,7 +112,7 @@
                     <label for="confirmationPassword">Confirmez votre mot de passe</label>
                     <input id="confirmationPassword" type="text" name="confirmationPassword" />
                 </div>
-                <input type="submit" class="logBtn" value="S'enregistrer">
+                <input type="submit" class="logBtn2" value="S'enregistrer">
             </form>
         </div>
         <?php
@@ -127,7 +132,6 @@
 
     <footer>
         <div>
-            Ceci est un footer vide.
         </div>
     </footer>
 </body>

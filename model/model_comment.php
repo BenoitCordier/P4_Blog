@@ -143,6 +143,16 @@ class CommentManager
         return $checkComment;
     }
 
+    public function checkAllComment()
+    {
+        $sql = 'SELECT id, postId, userName, commentContent, DATE_FORMAT(commentDate, \'%d/%m/%Y à %Hh%imin\') AS commentDateFr FROM comment ORDER BY commentDate DESC';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array());
+        $checkAllComment = $stmt;
+
+        return $checkAllComment;
+    }
+
     public function alertComment($id)
     {
         $sql ='UPDATE comment SET commentStatus = \'Alert\' WHERE id = ?';

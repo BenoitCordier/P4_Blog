@@ -18,7 +18,12 @@
     <meta property="og:title" content="Billet Simple pour l'Alaska" />
     <meta property="og:description" content="Billet Simple pour l'Alaska - Le nouveau livre de Jean Forteroche" />
     <title>Tableau de bord</title>
-    <link href="public/css/style_alt.css" rel="stylesheet" />
+    <link href="public/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" media="(max-width: 768px)" href="public/css/mobres.css">
+    <link rel="stylesheet" type="text/css" media="(min-width: 769px) and (max-width: 1024px)"
+        href="public/css/lowres.css">
+    <link rel="stylesheet" type="text/css" media="(min-width: 1025px) and (max-width: 1200px)"
+        href="public/css/medres.css">
 
     <script src="https://cdn.tiny.cloud/1/g5suvpkd4ia0orxi5hyg7ykb4lhbo8ekfij53v9ejdf331m5/tinymce/5/tinymce.min.js"
         referrerpolicy="origin"></script>
@@ -33,11 +38,8 @@
 
 <body>
     <div id="admin">
-        <div id="homeButton">
-            <a href="index.php?action=listPosts">
-                <p class="homeButton">Retour à l'accueil</p>
-            </a>
-        </div>
+        <a href="index.php?action=listPosts" class="homeButton">Retour à l'accueil
+        </a>
 
         <div id="adminButtons">
             <ul>
@@ -73,18 +75,20 @@
                     <?= nl2br(htmlspecialchars_decode($postsAdminArray['postContent'])) ?>
                 </div>
                 <div class="chapterBtn">
-
-                    <p class="modifyPost signal">Modifier
-                        l'article</p>
-                    <a
-                        href="index.php?action=deletePost&id=<?= $postsAdminArray['id']?>">
-                        <p id="deletePost" class="signal">Supprimer
-                            l'article</p>
+                    <button
+                        onclick="showModificationForm(<?= $postsAdminArray['id'] ?>)"
+                        class="modifyPostSignal">Modifier
+                        l'article</button>
+                    <a href="index.php?action=deletePost&id=<?= $postsAdminArray['id']?>"
+                        id="deletePost" class="signal">Supprimer
+                        l'article
                     </a>
                 </div>
             </div>
 
-            <div class="updatePost" style="display: none;">
+            <div class="updatePost"
+                id="updateForm<?= $postsAdminArray['id']?>"
+                style="display: none;">
                 <form
                     action="index.php?action=updatePost&id=<?= $postsAdminArray['id']?>"
                     method="post">
@@ -124,6 +128,9 @@
         </div>
 
         <div id="checkComment" style="display: none;">
+            <h3>
+                Commentaires signalés
+            </h3>
             <?php
                 while ($commentsAdminArray = $checkComment->fetch()) {
                     ?>
@@ -138,21 +145,46 @@
                 <div><?= nl2br(htmlspecialchars_decode($commentsAdminArray['commentContent'])) ?>
                 </div>
                 <div class="commentBtn">
-                    <a
-                        href="index.php?action=deleteComment&id=<?= $commentsAdminArray['id']?>">
-                        <p class="signal">Supprimer
-                            le commentaire</p>
+                    <a href="index.php?action=deleteComment&id=<?= $commentsAdminArray['id']?>"
+                        class="signal">Supprimer
+                        le commentaire
                     </a>
-                    <a
-                        href="index.php?action=clearComment&id=<?= $commentsAdminArray['id']?>">
-                        <p class="signal">Rétablir
-                            le commentaire</p>
+                    <a href="index.php?action=clearComment&id=<?= $commentsAdminArray['id']?>"
+                        class="signal">Rétablir
+                        le commentaire
                     </a>
                 </div>
             </div>
             <?php
                 }
                 $checkComment->closeCursor();
+                ?>
+            <h3>
+                Tous les commentaires
+            </h3>
+            <?php
+                while ($allCommentsAdminArray = $checkAllComment->fetch()) {
+                    ?>
+            <div class="checkComment">
+                <h4 class="commentTitle">Commentaire n°<?= htmlspecialchars($allCommentsAdminArray['id'])?>
+                </h4>
+                <h4>Article : <?= htmlspecialchars($allCommentsAdminArray['postId'])?>
+                </h4>
+                <h4><?= htmlspecialchars($allCommentsAdminArray['userName']) ?>
+                    le <?= $allCommentsAdminArray['commentDateFr'] ?>
+                </h4>
+                <div><?= nl2br(htmlspecialchars_decode($allCommentsAdminArray['commentContent'])) ?>
+                </div>
+                <div class="commentBtn">
+                    <a href="index.php?action=deleteComment&id=<?= $allCommentsAdminArray['id']?>"
+                        class="signal">Supprimer
+                        le commentaire
+                    </a>
+                </div>
+            </div>
+            <?php
+                }
+                $checkAllComment->closeCursor();
                 ?>
         </div>
 
@@ -167,10 +199,9 @@
                     <strong>Statut : </strong><?= nl2br(htmlspecialchars($usersAdminArray['function'])) ?>
                 </p>
                 <div class="userBtn">
-                    <a
-                        href="index.php?action=deleteUser&id=<?= $usersAdminArray['id']?>">
-                        <p class="signal">Supprimer
-                            l'utilisateur</p>
+                    <a href="index.php?action=deleteUser&id=<?= $usersAdminArray['id']?>"
+                        class="signal">Supprimer
+                        l'utilisateur
                     </a>
                 </div>
             </div>
