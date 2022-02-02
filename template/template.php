@@ -57,13 +57,13 @@
                     <a href="index.php?action=logOut">Déconnexion</a>
                 </li>
                 <?php
+            }
             if ($_SESSION['function'] == 'admin' && (basename($_SERVER['PHP_SELF']) != 'admin.php')) { // Si la session active est administrateur on affiche le bouton d'administration
                 ?>
                 <li class="logBtn1">
                     <a href="index.php?action=admin">Administration</a>
                 </li>
                 <?php
-            }
             }
             if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['userName']) && (basename($_SERVER['PHP_SELF']) === 'index.php')) {
                 ?>
