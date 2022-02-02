@@ -1,4 +1,5 @@
 <?php
+// Model Post qui gérera tout ce qu se rapporte aux articles
 class Post
 {
     private $id;
@@ -96,7 +97,7 @@ class PostManager
     }
 
     // Method
-
+    // Récupération des cinq derniers articles
     public function getPosts()
     {
         $sql = 'SELECT id, postTitle, postContent, DATE_FORMAT(postDate, \'%d/%m/%Y à %Hh%imin\') AS postDateFr FROM post ORDER BY postDate DESC LIMIT 0, 5';
@@ -105,7 +106,7 @@ class PostManager
         
         return $stmt;
     }
-
+    // Récupération des titres des articles
     public function getTitles()
     {
         $sql = 'SELECT id, postTitle, DATE_FORMAT(postDate, \'%d/%m/%Y à %Hh%imin\') AS postDateFr FROM post ORDER BY postDate';
@@ -114,7 +115,7 @@ class PostManager
 
         return $stmt;
     }
-
+    // Récupération d'un article en particulier
     public function getPost($postId)
     {
         $sql = 'SELECT id, postTitle, postContent, DATE_FORMAT(postDate, \'%d/%m/%Y à %Hh%imin\') AS postDateFr FROM post WHERE id = ?';
@@ -124,7 +125,7 @@ class PostManager
 
         return $post;
     }
-
+    // Récupération de tous les articles
     public function checkPost()
     {
         $sql = 'SELECT id, postTitle, postContent, DATE_FORMAT(postDate, \'%d/%m/%Y à %Hh%imin\') AS postDateFr FROM post ORDER BY postDate DESC';
@@ -134,7 +135,7 @@ class PostManager
 
         return $checkPost;
     }
-
+    // Création d'un nouvel article
     public function newPost($postTitle, $postContent)
     {
         $sql = 'INSERT INTO post(postTitle, postContent, postDate) VALUES(?, ?, NOW())';
@@ -144,7 +145,7 @@ class PostManager
 
         return $newPost;
     }
-
+    // Récupération du contenu d'un article
     public function modifyPost($id)
     {
         $sql = 'SELECT id, postTitle, postContent FROM post WHERE id = ?';
@@ -154,7 +155,7 @@ class PostManager
 
         return $modifiedPost;
     }
-
+    // Envoi du contenu modifié d'un article
     public function updatePost($id, $newTitle, $newContent)
     {
         $sql = 'UPDATE post SET postTitle = :newTitle, postContent = :newContent WHERE id = :id';
@@ -164,7 +165,7 @@ class PostManager
 
         return $updatedPost;
     }
-
+    // Suppression d'un article
     public function deletePost($id)
     {
         $sql = 'DELETE FROM post WHERE id = ?';

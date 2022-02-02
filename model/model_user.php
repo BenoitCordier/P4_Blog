@@ -1,4 +1,5 @@
 <?php
+// Model User qui gérera tout ce qui se rapporte aux utilisateurs
 class User
 {
     private $_id;
@@ -128,7 +129,7 @@ class UserManager
     }
 
     // Method
-
+    // Enregistrement d'un nouvel utilisateur
     public function signIn($userName, $passHash, $eMail, $firstName, $lastName)
     {
         $sql = "INSERT INTO user(userName, firstName, lastName, eMail, password, function) VALUES(:userName, :firstName, :lastName, :eMail, :passHash, 'user')";
@@ -141,7 +142,7 @@ class UserManager
         $result = $stmt->execute();
         return $result;
     }
-
+    // Récupération des informations de tous les utilisateurs
     public function checkUsers()
     {
         $sql = "SELECT * FROM user";
@@ -151,7 +152,7 @@ class UserManager
 
         return $checkUsers;
     }
-
+    // Récupération des informations d'un utilisateur
     public function getInfo($userName)
     {
         $sql = "SELECT * FROM user WHERE userName = ?";
@@ -161,7 +162,7 @@ class UserManager
 
         return $result;
     }
-
+    // Suppression d'un utilisateur
     public function deleteUser($id)
     {
         $sql = 'DELETE FROM user WHERE id = ?';

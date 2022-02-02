@@ -2,6 +2,7 @@
 <?php ob_start(); ?>
 <div class="flexCenterBig1">
     <div id="flexCenterBig2">
+        <!-- Biographie de l'auteur -->
         <div id="flexLeft">
             <h3>L'auteur</h3>
             <p class="bio">
@@ -13,6 +14,7 @@
                 vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim.»
             </p>
         </div>
+        <!-- Cinq derniers chapitres publiés -->
         <div id="flexCenter">
             <h2 id="lastChapter">Derniers chapitres</h2>
             <?php
@@ -39,6 +41,7 @@
             $posts->closeCursor();
             ?>
         </div>
+        <!-- Encart de navigation -->
         <div id="flexRight">
             <h3>Les chapitres</h3>
             <?php

@@ -40,7 +40,7 @@
     <div id="admin">
         <a href="index.php?action=listPosts" class="homeButton">Retour à l'accueil
         </a>
-
+        <!-- Contrôles du panneau d'administration -->
         <div id="adminButtons">
             <ul>
                 <li style="display:inline" id="checkPostJs" class="adminBtn">Gérer les
@@ -57,6 +57,7 @@
                 </li>
             </ul>
         </div>
+        <!-- Affichage de tous les articles -->
         <div id="checkPost" style="display: none;">
             <?php
                 while ($postsAdminArray = $checkPost->fetch()) {
@@ -85,7 +86,7 @@
                     </a>
                 </div>
             </div>
-
+            <!-- Formulaire de modification d'un article -->
             <div class="updatePost"
                 id="updateForm<?= $postsAdminArray['id']?>"
                 style="display: none;">
@@ -111,7 +112,7 @@
                 $checkPost->closeCursor();
                 ?>
         </div>
-
+        <!-- Formulaire d'écriture d'un nouvel article -->
         <div id="newPost" style="display: none;">
             <form action="index.php?action=newPost" method="post">
                 <h3>
@@ -126,7 +127,7 @@
                 <input type="submit" />
             </form>
         </div>
-
+        <!-- Affichage des commentaires -->
         <div id="checkComment" style="display: none;">
             <h3>
                 Commentaires signalés
@@ -187,7 +188,7 @@
                 $checkAllComment->closeCursor();
                 ?>
         </div>
-
+        <!-- Affichage des utilisateurs -->
         <div id="checkUser" style="display: none;">
             <?php
                 while ($usersAdminArray = $checkUsers->fetch()) {

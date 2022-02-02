@@ -32,14 +32,16 @@
         });
     </script>
 </head>
+<!-- Template qu'on utilise pour la page d'accueil et les pages des articles -->
 
 <body>
     <header>
-        <h1>Titre du blog</h1>
+        <h1>Billet simple pour l'Alaska</h1>
+        <!-- Bouton de connexion/enregistrement/déconnexion -->
         <div id="control">
             <ul>
                 <?php
-                if (session_status() !== PHP_SESSION_ACTIVE || !isset($_SESSION['userName'])) {
+                if (session_status() !== PHP_SESSION_ACTIVE || !isset($_SESSION['userName'])) { // Si aucune session n'est active on affiche les boutons de connexion et d'enregistrement
                     ?>
                 <li id="connexion" class="logBtn1">
                     Se connecter
@@ -49,13 +51,13 @@
                 </li>
                 <?php
                 }
-            if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['userName'])) {
+            if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['userName'])) { // Si une session est active on n'affiche que le bouton de déconnexion
                 ?>
                 <li class="logBtn1">
                     <a href="index.php?action=logOut">Déconnexion</a>
                 </li>
                 <?php
-            if ($_SESSION['function'] == 'admin' && (basename($_SERVER['PHP_SELF']) != 'admin.php')) {
+            if ($_SESSION['function'] == 'admin' && (basename($_SERVER['PHP_SELF']) != 'admin.php')) { // Si la session active est administrateur on affiche le bouton d'administration
                 ?>
                 <li class="logBtn1">
                     <a href="index.php?action=admin">Administration</a>
@@ -71,6 +73,7 @@
             }
             if (session_status() !== PHP_SESSION_ACTIVE || !isset($_SESSION['userName'])) {
                 ?>
+        <!-- Formulaire de connexion -->
         <div id="logIn" style="display: none;">
             <h2>Se connecter</h2>
             <form method="POST" action="index.php?action=logIn">
@@ -85,6 +88,7 @@
                 <input type="submit" class="logBtn2" value="Connexion" />
             </form>
         </div>
+        <!-- Formulaire d'enregistrement -->
         <div id="signIn" style="display: none;">
             <h2>S'enregistrer</h2>
             <form method="POST" action="index.php?action=signIn">
@@ -121,6 +125,7 @@
     </header>
 
     <?= $content?>
+    <!-- JS pour gérer l'affichage des formulaires de connexion et d'enregistrement, on ne les charges que si il n'y a pas de session d'active -->
     <?php
             if (session_status() !== PHP_SESSION_ACTIVE || !isset($_SESSION['userName'])) {
                 ?>

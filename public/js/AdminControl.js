@@ -1,3 +1,4 @@
+// Fonctionnement des boutons du panneau d'administration
 class AdminControl {
     constructor() {
         this.newPostDiv = document.querySelector('#newPost');
@@ -14,14 +15,14 @@ class AdminControl {
         this.btnCheckPost.addEventListener('click', (e) => {this.checkPostControl(e)});
         this.btnCheckComment.addEventListener('click', (e) => {this.checkCommentControl(e)});
         this.btnCheckUser.addEventListener('click', (e) => {this.checkUserControl(e)});
-
+        // On charge les fonctions au chargement de la fenêtre pour éviter le double clic
         window.onload = this.newPostControl();
         window.onload = this.checkPostControl();
         window.onload = this.checkCommentControl();
         window.onload = this.checkUserControl();
         window.onload = this.modifyPostControl(); 
     }
-
+    // Affichage de la liste des articles
     checkPostControl(e) {
         var checkPostState = localStorage.getItem('checkPostState');
 
@@ -44,7 +45,7 @@ class AdminControl {
             localStorage.setItem('checkPostState', 'show');
         }
     }
-
+    // Affichage du formulaire de création d'un article
     newPostControl(e) {
         var newPostState = localStorage.getItem('newPostState');
 
@@ -68,7 +69,7 @@ class AdminControl {
             localStorage.setItem('newPostState', 'show');
         }
     }
-
+    // Affichages de la liste des commentaires
     checkCommentControl(e) {
         var checkCommentState = localStorage.getItem('checkCommentState');
 
@@ -91,7 +92,7 @@ class AdminControl {
             localStorage.setItem('checkCommentState', 'show');
         }
     }
-
+    // Affichage de la liste des utilisateurs
     checkUserControl(e) {
         var checkUserState = localStorage.getItem('checkUserState');
 

@@ -1,7 +1,10 @@
 <?php
+// Routeur
+
 session_start();
 require 'controller/controller.php';
 
+// Routing des requêtes liées à l'indentification
 function registrationRouting()
 {
     switch ($_GET['action']) {
@@ -21,7 +24,7 @@ function registrationRouting()
             header("HTTP/1.0 404 Not Found");
     }
 }
-
+// Routing des requêtes liées à la navigation
 function postAndCommentsRouting()
 {
     switch ($_GET['action']) {
@@ -49,7 +52,7 @@ function postAndCommentsRouting()
             header("HTTP/1.0 404 Not Found");
     }
 }
-
+// Routing des requêtes liées à l'administration
 function administrationRouting()
 {
     switch ($_GET['action']) {
@@ -89,7 +92,7 @@ function administrationRouting()
             header("HTTP/1.0 404 Not Found");
     }
 }
-
+// Paramétrage erreur 404
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         case 'logIn':

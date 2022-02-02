@@ -1,4 +1,5 @@
 <?php
+// Model Comment qui gérera tout ce qui se rapporte aux commentaires
 class Comment
 {
     private $id;
@@ -112,7 +113,7 @@ class CommentManager
     }
 
     // Method
-
+    // Récupération des commentaires associés à un article
     public function getComments($postId)
     {
         $sql = 'SELECT id, postId, userName, commentContent, DATE_FORMAT(commentDate, \'%d/%m/%Y à %Hh%imin\') AS commentDateFr FROM comment WHERE postId = ? AND commentStatus = \'Ok\' ORDER BY commentDate DESC';
@@ -122,7 +123,7 @@ class CommentManager
 
         return $comments;
     }
-
+    // Ajout d'un nouveau commentaire
     public function addComment($postId, $userName, $commentContent)
     {
         $sql = 'INSERT INTO comment(postId, userName, commentContent, commentDate) VALUES(?, ?, ?, NOW())';
@@ -132,7 +133,7 @@ class CommentManager
 
         return $affectedLines;
     }
-
+    // Récupération des articles signalés
     public function checkComment()
     {
         $sql = 'SELECT id, postId, userName, commentContent, DATE_FORMAT(commentDate, \'%d/%m/%Y à %Hh%imin\') AS commentDateFr FROM comment WHERE commentStatus = \'Alert\' ORDER BY commentDate DESC';
@@ -142,7 +143,7 @@ class CommentManager
 
         return $checkComment;
     }
-
+    // Récupération de tous les articles
     public function checkAllComment()
     {
         $sql = 'SELECT id, postId, userName, commentContent, DATE_FORMAT(commentDate, \'%d/%m/%Y à %Hh%imin\') AS commentDateFr FROM comment ORDER BY commentDate DESC';
@@ -152,7 +153,7 @@ class CommentManager
 
         return $checkAllComment;
     }
-
+    // Marquage d'un article comme signalé
     public function alertComment($id)
     {
         $sql ='UPDATE comment SET commentStatus = \'Alert\' WHERE id = ?';
@@ -162,7 +163,7 @@ class CommentManager
 
         return $alertedComment;
     }
-
+    // Rétablissement d'un commentaire signalé
     public function clearComment($id)
     {
         $sql = 'UPDATE comment SET commentStatus = \'Ok\' WHERE id = ?';
@@ -172,7 +173,7 @@ class CommentManager
 
         return $clearedComment;
     }
-    
+    // Suppression d'un commentaire
     public function deleteComment($id)
     {
         $sql = 'DELETE FROM comment WHERE id = ?';
@@ -182,7 +183,7 @@ class CommentManager
 
         return $deletedComment;
     }
-
+    // Suppression de tous les commentaires d'un article
     public function deleteAllComment($id)
     {
         $sql = 'DELETE FROM comment WHERE postId = ?';

@@ -4,7 +4,7 @@
     <div id="flexPostView">
         <a href="index.php?action=listPosts" class="homeButton">Retour à l'accueil
         </a>
-
+        <!-- Affichage de l'article -->
         <div class="chapter chapterSolo">
             <h3>
                 <?= htmlspecialchars($post['postTitle']) ?>
@@ -16,7 +16,7 @@
                 <?= nl2br(htmlspecialchars_decode($post['postContent'])) ?>
             </div>
         </div>
-
+        <!-- Affichage des commentaires-->
         <div class="commentSolo">
             <h3>Commentaires</h3>
             <?php
@@ -42,6 +42,7 @@
                 }
                 $comments->closeCursor();
             ?>
+            <!-- Formulaire d'écriture d'un nouvau commentaire -->
             <?php
     if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['userName'])) {
         ?>

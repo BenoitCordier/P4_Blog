@@ -1,3 +1,5 @@
+// Fonctionnement des boutons du panneau d'administration
+
 var admin = new AdminControl();
 
 function showModificationForm(id) {
