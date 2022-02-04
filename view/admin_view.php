@@ -13,7 +13,7 @@
     <meta name="description" content="Billet Simple pour l'Alaska">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <meta property="og:url" content="http://jeanforteroche.bcordier.fr/index.html" />
+    <meta property="og:url" content="http://jeanforteroche.bcordier.fr/index.php" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Billet Simple pour l'Alaska" />
     <meta property="og:description" content="Billet Simple pour l'Alaska - Le nouveau livre de Jean Forteroche" />
