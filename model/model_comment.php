@@ -133,7 +133,8 @@ class CommentManager
 
         return $affectedLines;
     }
-    // Récupération des articles signalés
+    // Admin
+    // Récupération des commentaires signalés
     public function checkComment()
     {
         $sql = 'SELECT id, postId, userName, commentContent, DATE_FORMAT(commentDate, \'%d/%m/%Y à %Hh%imin\') AS commentDateFr FROM comment WHERE commentStatus = \'Alert\' ORDER BY commentDate DESC';
@@ -143,7 +144,7 @@ class CommentManager
 
         return $checkComment;
     }
-    // Récupération de tous les articles
+    // Récupération de tous les commentaires
     public function checkAllComment()
     {
         $sql = 'SELECT id, postId, userName, commentContent, DATE_FORMAT(commentDate, \'%d/%m/%Y à %Hh%imin\') AS commentDateFr FROM comment ORDER BY commentDate DESC';
@@ -153,7 +154,7 @@ class CommentManager
 
         return $checkAllComment;
     }
-    // Marquage d'un article comme signalé
+    // Marquage d'un commentaire comme signalé
     public function alertComment($id)
     {
         $sql ='UPDATE comment SET commentStatus = \'Alert\' WHERE id = ?';

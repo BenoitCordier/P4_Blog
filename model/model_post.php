@@ -125,6 +125,7 @@ class PostManager
 
         return $post;
     }
+    // Admin
     // Récupération de tous les articles
     public function checkPost()
     {
